@@ -208,9 +208,9 @@ export default function OnboardingPage() {
                   <button 
                     type="submit" 
                     disabled={isLoading || isSuccess}
-                    className={\`w-full md:w-auto px-10 py-3 rounded-xl text-xs font-medium text-white transition-all active:scale-[0.98] flex items-center justify-center gap-2 \${
+                    className={`w-full md:w-auto px-10 py-3 rounded-xl text-xs font-medium text-white transition-all active:scale-[0.98] flex items-center justify-center gap-2 ${
                       isSuccess ? 'bg-green-600' : 'bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/20'
-                    }\`}
+                    }`}
                   >
                     {isLoading ? (
                        <>
