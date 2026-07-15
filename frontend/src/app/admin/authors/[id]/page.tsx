@@ -1,118 +1,111 @@
-import React from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
+import prisma from "@/lib/prisma";
+import DashboardClient from "../../dashboard/DashboardClient";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 
-export default function AuthorProfilePage({ params }: { params: { id: string } }) {
+export default async function AuthorDetailPage({ params }: { params: { id: string } }) {
+  const author = await prisma.author.findUnique({
+    where: { id: params.id }
+  });
+
+  if (!author) {
+    return notFound();
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-8">
-      <div className="max-w-7xl mx-auto space-y-6">
-        <header className="flex justify-between items-center bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm border">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">John Doe</h1>
-            <p className="text-muted-foreground mt-1">Author ID: {params.id} • Status: <span className="text-yellow-600 font-medium">Pending Review</span></p>
+    <DashboardClient 
+      authors={[]} 
+      overrideTitle={`Author: ${author.fullName}`}
+      overrideSubtitle="View complete submitted details."
+    >
+      <div className="flex justify-between items-center mb-6">
+        <Link href="/admin/authors" className="text-[#b3c5ff] hover:text-white transition-colors flex items-center gap-2 text-sm font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back to Authors
+        </Link>
+        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest border ${
+          author.status === 'SUBMITTED' ? 'bg-[#ffb59d]/10 text-[#ffb59d] border-[#ffb59d]/20' : 
+          'bg-[#b3c5ff]/10 text-[#b3c5ff] border-[#b3c5ff]/20'
+        }`}>
+          {author.status}
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Personal Details */}
+        <div className="glass-panel p-6 rounded-xl">
+          <h3 className="text-lg font-bold text-[#b3c5ff] mb-4 border-b border-[#424656]/30 pb-2">Personal Information</h3>
+          <dl className="space-y-3 text-sm">
+            <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+              <dt className="text-[#8c90a1]">Full Name</dt>
+              <dd className="text-[#d3e4fe] font-medium">{author.fullName}</dd>
+            </div>
+            <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+              <dt className="text-[#8c90a1]">Email ID</dt>
+              <dd className="text-[#d3e4fe] font-medium">{author.emailId}</dd>
+            </div>
+            <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+              <dt className="text-[#8c90a1]">Mobile Number</dt>
+              <dd className="text-[#d3e4fe] font-medium">{author.mobileNumber}</dd>
+            </div>
+            <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+              <dt className="text-[#8c90a1]">WhatsApp Number</dt>
+              <dd className="text-[#d3e4fe] font-medium">{author.whatsappNumber || 'N/A'}</dd>
+            </div>
+            <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+              <dt className="text-[#8c90a1]">City / State / PIN</dt>
+              <dd className="text-[#d3e4fe] font-medium">{author.city}, {author.state} - {author.pinCode}</dd>
+            </div>
+            <div className="flex flex-col gap-1 pt-1">
+              <dt className="text-[#8c90a1]">Address</dt>
+              <dd className="text-[#c2c6d8] bg-[#102034] p-2 rounded">{author.address}</dd>
+            </div>
+          </dl>
+        </div>
+
+        {/* Bank & Nominee Details */}
+        <div className="flex flex-col gap-6">
+          <div className="glass-panel p-6 rounded-xl">
+            <h3 className="text-lg font-bold text-[#b3c5ff] mb-4 border-b border-[#424656]/30 pb-2">Bank Details</h3>
+            <dl className="space-y-3 text-sm">
+              <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+                <dt className="text-[#8c90a1]">Bank Name</dt>
+                <dd className="text-[#d3e4fe] font-medium">{author.bankName || 'N/A'}</dd>
+              </div>
+              <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+                <dt className="text-[#8c90a1]">Account Holder</dt>
+                <dd className="text-[#d3e4fe] font-medium">{author.holderName || 'N/A'}</dd>
+              </div>
+              <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+                <dt className="text-[#8c90a1]">Account Number</dt>
+                <dd className="text-[#d3e4fe] font-medium">{author.accountNumber || 'N/A'}</dd>
+              </div>
+              <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+                <dt className="text-[#8c90a1]">IFSC Code</dt>
+                <dd className="text-[#d3e4fe] font-medium">{author.ifscCode || 'N/A'}</dd>
+              </div>
+            </dl>
           </div>
-          <div className="flex items-center gap-4">
-            <button className="px-4 py-2 border rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition">Contact Author</button>
-            <button className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:opacity-90 transition">Approve Onboarding</button>
-          </div>
-        </header>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Details */}
-          <div className="lg:col-span-2 space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Personal Details</CardTitle>
-              </CardHeader>
-              <CardContent className="grid grid-cols-2 gap-4 text-sm">
-                <div>
-                  <div className="text-muted-foreground">Email</div>
-                  <div className="font-medium">john.doe@example.com</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Mobile</div>
-                  <div className="font-medium">+1 555-0192</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Address</div>
-                  <div className="font-medium">123 Author Lane, Fiction City</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Company</div>
-                  <div className="font-medium">Storytellers Inc.</div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Book Details</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4 text-sm">
-                <div>
-                  <div className="text-muted-foreground">Title</div>
-                  <div className="font-medium text-lg">The Great Adventure</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Category</div>
-                  <div className="font-medium">Fiction / Fantasy</div>
-                </div>
-                <div>
-                  <div className="text-muted-foreground">Expected Timeline</div>
-                  <div className="font-medium">6 Months</div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Right Column - Tasks & Timeline */}
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Internal Tasks</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-3">
-                    <input type="checkbox" className="mt-1" />
-                    <div>
-                      <div className="font-medium text-sm">Verify Bank Details</div>
-                      <div className="text-xs text-muted-foreground">Assigned to: Finance Team</div>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <input type="checkbox" className="mt-1" />
-                    <div>
-                      <div className="font-medium text-sm">Review Identity Docs</div>
-                      <div className="text-xs text-muted-foreground">Assigned to: Sales Manager</div>
-                    </div>
-                  </li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Activity Timeline</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="relative pl-4 border-l border-gray-200 dark:border-gray-700 space-y-6">
-                  <div className="relative">
-                    <div className="absolute -left-[21px] top-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-white dark:border-gray-900" />
-                    <div className="text-sm font-medium">HubSpot Contact Created</div>
-                    <div className="text-xs text-muted-foreground">2 hours ago</div>
-                  </div>
-                  <div className="relative">
-                    <div className="absolute -left-[21px] top-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white dark:border-gray-900" />
-                    <div className="text-sm font-medium">Onboarding Form Submitted</div>
-                    <div className="text-xs text-muted-foreground">3 hours ago</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          
+          <div className="glass-panel p-6 rounded-xl">
+            <h3 className="text-lg font-bold text-[#b3c5ff] mb-4 border-b border-[#424656]/30 pb-2">Nominee Details</h3>
+            <dl className="space-y-3 text-sm">
+              <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+                <dt className="text-[#8c90a1]">Nominee Name</dt>
+                <dd className="text-[#d3e4fe] font-medium">{author.nomineeName || 'N/A'}</dd>
+              </div>
+              <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+                <dt className="text-[#8c90a1]">Relation</dt>
+                <dd className="text-[#d3e4fe] font-medium">{author.relation || 'N/A'}</dd>
+              </div>
+              <div className="flex justify-between border-b border-[#424656]/20 pb-2">
+                <dt className="text-[#8c90a1]">Nominee Mobile</dt>
+                <dd className="text-[#d3e4fe] font-medium">{author.nomineeMobile || 'N/A'}</dd>
+              </div>
+            </dl>
           </div>
         </div>
       </div>
-    </div>
+    </DashboardClient>
   );
 }

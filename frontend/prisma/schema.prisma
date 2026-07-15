@@ -11,27 +11,231 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model AdminUser {
+enum Role {
+  ADMIN
+  SALES_MANAGER
+  SALES_EXECUTIVE
+  IT_TEAM
+  CONTENT_TEAM
+  PUBLISHING_TEAM
+  MARKETING_TEAM
+  FINANCE_TEAM
+}
+
+enum AuthorStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  APPROVED
+  PAYMENT_PENDING
+  PUBLISHING
+  PUBLISHED
+  REJECTED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  REVIEW
+  DONE
+}
+
+model User {
   id        String   @id @default(uuid())
   email     String   @unique
   password  String
+  name      String?
+  role      Role     @default(SALES_EXECUTIVE)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  assignedAuthors Author[] @relation("AssignedSales")
+  tasks           Task[]   @relation("AssignedTasks")
 }
 
-model AuthorApplication {
-  id            String   @id @default(uuid())
-  fullName      String
-  mobileNumber  String
-  emailId       String
-  address       String
+model Author {
+  id            String       @id @default(uuid())
+  authorId      String?      @unique // Generated human-readable ID e.g. PNP-AUTH-001
+  status        AuthorStatus @default(DRAFT)
   
-  nomineeName   String
-  relation      String
+  // Personal Details
+  fullName        String
+  mobileNumber    String
+  whatsappNumber  String?
+  emailId         String       @unique
+  dob             DateTime?
+  gender          String?
+  address         String
+  city            String?
+  state           String?
+  country         String?
+  pinCode         String?
+  occupation      String?
+  linkedin        String?
+  instagram       String?
+  website         String?
+  companyName     String?
+  gstNumber       String?
+  pan             String?
+  aadhaar         String?
+
+  // Nominee Details
+  nomineeName     String?
+  relation        String?
+  nomineeMobile   String?
+  nomineeEmail    String?
+  nomineeAddress  String?
+
+  // Bank Details
+  holderName         String?
+  accountNumber      String?
+  ifscCode           String?
+  bankName           String?
+  branch             String?
+  cancelledChequeUrl String?
+
+  // Identity Uploads
+  passportPhotoUrl String?
+  panUrl           String?
+  aadhaarUrl       String?
+  passportUrl      String?
+  companyLogoUrl   String?
+  signatureUrl     String?
+
+  // Book Details
+  bookTitle         String?
+  subtitle          String?
+  category          String?
+  language          String?
+  targetAudience    String?
+  goalOfBook        String?
+  publishingPackage String?
+  expectedTimeline  String?
+  bookDescription   String? @db.Text
+
+  // Agreement
+  digitalSignatureUrl String?
+  termsAccepted       Boolean @default(false)
+  privacyAccepted     Boolean @default(false)
+
+  // Tracking Data
+  ipAddress       String?
+  latitude        Float?
+  longitude       Float?
+  browser         String?
+  os              String?
+  timezone        String?
+  languagePref    String?
+  deviceType      String?
+  referralSource  String?
+  utmSource       String?
+  utmMedium       String?
+  utmCampaign     String?
+  fbClickId       String?
+  googleClickId   String?
+  landingPageUrl  String?
+  currentUrl      String?
+
+  // Relations
+  assignedSalesId String?
+  assignedSales   User?    @relation("AssignedSales", fields: [assignedSalesId], references: [id])
   
-  holderName    String
-  accountNumber String
-  ifscCode      String
+  tasks           Task[]
+  activityLogs    ActivityLog[]
+  integrationLogs IntegrationLog[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Task {
+  id          String       @id @default(uuid())
+  title       String
+  description String?      @db.Text
+  status      TaskStatus   @default(TODO)
+  priority    TaskPriority @default(MEDIUM)
+  dueDate     DateTime?
   
-  status        String   @default("Pending")
-  createdAt     DateTime @default(now())
+  authorId    String
+  author      Author       @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  
+  assigneeId  String?
+  assignee    User?        @relation("AssignedTasks", fields: [assigneeId], references: [id])
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model ActivityLog {
+  id          String   @id @default(uuid())
+  action      String
+  details     String?  @db.Text
+  
+  authorId    String
+  author      Author   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  
+  userId      String?  // Optional, if triggered by internal team
+
+  createdAt   DateTime @default(now())
+}
+
+model IntegrationLog {
+  id          String   @id @default(uuid())
+  service     String   // e.g., 'HubSpot', 'Facebook CAPI', 'Brevo'
+  status      String   // e.g., 'SUCCESS', 'FAILED'
+  requestPayload String? @db.Text
+  responsePayload String? @db.Text
+  
+  authorId    String
+  author      Author   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+}
+
+model AppSetting {
+  key       String   @id
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}
+
+model Invite {
+  id        String   @id @default(uuid())
+  token     String   @unique @default(uuid())
+  email     String   @unique
+  status    String   @default("PENDING") // PENDING, USED, CANCELLED
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PreInviteApplication {
+  id          String   @id @default(uuid())
+  name        String
+  email       String
+  phone       String
+  aboutYou    String   @db.Text
+  linkedinUrl String
+  status      String   @default("PENDING") // PENDING, REVIEWED, REJECTED
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model DynamicPage {
+  id        String   @id @default(uuid())
+  slug      String   @unique
+  title     String
+  content   String   @db.Text
+  type      String   @default("MARKETING") // MARKETING, LEGAL
+  status    String   @default("PUBLISHED") // PUBLISHED, DRAFT
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

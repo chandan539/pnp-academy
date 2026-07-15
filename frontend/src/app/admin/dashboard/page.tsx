@@ -5,16 +5,24 @@ import DashboardClient from "./DashboardClient";
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboardPage() {
-  const applications = await prisma.authorApplication.findMany({
+  const authors = await prisma.author.findMany({
     orderBy: { createdAt: 'desc' },
     take: 10
   });
 
-  const pendingCount = await prisma.authorApplication.count({
-    where: { status: 'Pending' }
-  });
+  const totalAuthors = await prisma.author.count();
+  const pendingAuthors = await prisma.author.count({ where: { status: 'SUBMITTED' } });
+  const approvedAuthors = await prisma.author.count({ where: { status: 'APPROVED' } });
+  const publishedAuthors = await prisma.author.count({ where: { status: 'PUBLISHED' } });
+
+  const stats = {
+    total: totalAuthors,
+    pending: pendingAuthors,
+    approved: approvedAuthors,
+    published: publishedAuthors
+  };
 
   return (
-    <DashboardClient applications={applications} pendingCount={pendingCount} />
+    <DashboardClient authors={authors} stats={stats} />
   );
 }
