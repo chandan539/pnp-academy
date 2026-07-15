@@ -4,20 +4,33 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
+import { saveApplication } from '../actions/onboarding';
+
 export default function OnboardingPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   
+  const [fullName, setFullName] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [emailId, setEmailId] = useState('');
+  const [address, setAddress] = useState('');
+  
+  const [nomineeName, setNomineeName] = useState('');
+  const [relation, setRelation] = useState('');
+  
+  const [holderName, setHolderName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [confirmAccountNumber, setConfirmAccountNumber] = useState('');
+  const [ifscCode, setIfscCode] = useState('');
+  
   const [accountError, setAccountError] = useState('');
 
   const nextStep = () => setStep(prev => Math.min(prev + 1, 3));
   const prevStep = () => setStep(prev => Math.max(prev - 1, 1));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (step < 3) {
       nextStep();
@@ -31,13 +44,29 @@ export default function OnboardingPage() {
     setAccountError('');
     
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+    
+    const result = await saveApplication({
+      fullName,
+      mobileNumber,
+      emailId,
+      address,
+      nomineeName,
+      relation,
+      holderName,
+      accountNumber,
+      ifscCode
+    });
+
+    setIsLoading(false);
+
+    if (result.success) {
       setIsSuccess(true);
       setTimeout(() => {
         router.push('/thank-you');
       }, 500);
-    }, 1200);
+    } else {
+      setAccountError(result.error || 'Failed to save application');
+    }
   };
 
   const slideVariants = {
@@ -123,19 +152,19 @@ export default function OnboardingPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="full_name">Full Name</label>
-                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="full_name" placeholder="Johnathan Doe" type="text" />
+                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="full_name" placeholder="Johnathan Doe" type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} />
                       </div>
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="mobile_number">Mobile Number</label>
-                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="mobile_number" placeholder="+1 (555) 000-0000" type="tel" />
+                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="mobile_number" placeholder="+1 (555) 000-0000" type="tel" value={mobileNumber} onChange={(e) => setMobileNumber(e.target.value)} />
                       </div>
                       <div className="flex flex-col gap-2 md:col-span-2">
                         <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="email_id">Email ID</label>
-                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="email_id" placeholder="john.doe@example.com" type="email" />
+                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="email_id" placeholder="john.doe@example.com" type="email" value={emailId} onChange={(e) => setEmailId(e.target.value)} />
                       </div>
                       <div className="flex flex-col gap-2 md:col-span-2">
                         <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="address">Address with PIN Code</label>
-                        <textarea required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all resize-none" id="address" placeholder="123 Creator Lane, Tech Hub, 94103" rows={3}></textarea>
+                        <textarea required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all resize-none" id="address" placeholder="123 Creator Lane, Tech Hub, 94103" rows={3} value={address} onChange={(e) => setAddress(e.target.value)}></textarea>
                       </div>
                     </div>
                   </motion.div>
@@ -158,11 +187,11 @@ export default function OnboardingPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="nominee_name">Nominee Full Name</label>
-                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="nominee_name" placeholder="Jane Doe" type="text" />
+                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="nominee_name" placeholder="Jane Doe" type="text" value={nomineeName} onChange={(e) => setNomineeName(e.target.value)} />
                       </div>
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="relation">Relation with Nominee</label>
-                        <select required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all appearance-none" id="relation" defaultValue="">
+                        <select required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all appearance-none" id="relation" value={relation} onChange={(e) => setRelation(e.target.value)}>
                           <option disabled value="">Select relation</option>
                           <option value="spouse">Spouse</option>
                           <option value="parent">Parent</option>
@@ -191,7 +220,7 @@ export default function OnboardingPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="flex flex-col gap-2 md:col-span-2">
                         <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="holder_name">Bank Account Holder Name</label>
-                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="holder_name" placeholder="Name as per Bank Records" type="text" />
+                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="holder_name" placeholder="Name as per Bank Records" type="text" value={holderName} onChange={(e) => setHolderName(e.target.value)} />
                       </div>
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="account_number">Account Number</label>
@@ -204,7 +233,7 @@ export default function OnboardingPage() {
                       </div>
                       <div className="flex flex-col gap-2 md:col-span-2">
                         <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="ifsc_code">IFSC Code</label>
-                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="ifsc_code" placeholder="PNPA0001234" type="text" />
+                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="ifsc_code" placeholder="PNPA0001234" type="text" value={ifscCode} onChange={(e) => setIfscCode(e.target.value)} />
                       </div>
                     </div>
                   </motion.div>

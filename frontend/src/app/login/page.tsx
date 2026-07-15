@@ -4,22 +4,29 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+import { loginAdmin } from '../actions/auth';
+
 export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) return;
     setIsLoading(true);
+    setError('');
 
-    setTimeout(() => {
-      // Simulate successful login and set cookie
-      document.cookie = "admin_token=mock-token; path=/;";
+    const res = await loginAdmin(email, password);
+    
+    if (res?.error) {
+      setError(res.error);
+      setIsLoading(false);
+    } else {
       router.push('/admin/dashboard');
-    }, 1500);
+    }
   };
 
   return (
@@ -102,6 +109,13 @@ export default function LoginPage() {
               </div>
               <input className="w-full bg-[#1b2b3f]/50 border border-[#424656]/30 rounded-lg px-6 py-4 text-sm text-[#d3e4fe] placeholder:text-[#8c90a1] focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow relative z-20" id="password" name="password" placeholder="••••••••" required type="password" value={password} onChange={e => setPassword(e.target.value)} />
             </div>
+            
+            {error && (
+              <div className="text-red-400 text-xs font-medium text-center mt-2">
+                {error}
+              </div>
+            )}
+            
             <button className="w-full bg-blue-600 text-white text-xs font-medium py-4 rounded-lg hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-6" type="submit" disabled={isLoading}>
               {isLoading ? (
                 <>
