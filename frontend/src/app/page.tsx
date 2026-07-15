@@ -38,13 +38,6 @@ export default function Home() {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
-
-          <Link href="/admin/dashboard" className="w-full sm:w-auto">
-            <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg h-14 px-8 rounded-full border-2 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all">
-              <LayoutDashboard className="mr-2 h-5 w-5" />
-              Admin Dashboard
-            </Button>
-          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16 text-left">
