@@ -1,0 +1,207 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  SALES_MANAGER
+  SALES_EXECUTIVE
+  IT_TEAM
+  CONTENT_TEAM
+  PUBLISHING_TEAM
+  MARKETING_TEAM
+  FINANCE_TEAM
+}
+
+enum AuthorStatus {
+  PENDING
+  REVIEW
+  APPROVED
+  REJECTED
+  PUBLISHING
+  COMPLETED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(SALES_EXECUTIVE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tasks     Task[]
+}
+
+model Author {
+  id       String @id @default(uuid())
+  authorId String @unique // Generated Author ID
+
+  // Personal Details
+  fullName    String
+  mobile      String
+  whatsapp    String?
+  email       String    @unique
+  dob         DateTime?
+  gender      String?
+  address     String?
+  city        String?
+  state       String?
+  country     String?
+  pinCode     String?
+  occupation  String?
+  linkedin    String?
+  instagram   String?
+  website     String?
+  companyName String?
+  gstNumber   String?
+  pan         String?
+  aadhaar     String?
+
+  status    AuthorStatus @default(PENDING)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  nominee      Nominee?
+  bankDetail   BankDetail?
+  identityDocs IdentityDocument?
+  bookDetail   BookDetail?
+  agreement    Agreement?
+  workflowLogs WorkflowLog[]
+  tasks        Task[]
+  trackingData TrackingData?
+}
+
+model Nominee {
+  id           String  @id @default(uuid())
+  authorId     String  @unique
+  name         String
+  relationship String
+  mobile       String
+  email        String?
+  address      String?
+  author       Author  @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model BankDetail {
+  id                 String  @id @default(uuid())
+  authorId           String  @unique
+  accountHolderName  String
+  accountNumber      String
+  ifscCode           String
+  bankName           String
+  branch             String?
+  cancelledChequeUrl String?
+  author             Author  @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model IdentityDocument {
+  id           String  @id @default(uuid())
+  authorId     String  @unique
+  photoUrl     String?
+  panUrl       String?
+  aadhaarUrl   String?
+  passportUrl  String?
+  logoUrl      String?
+  signatureUrl String?
+  author       Author  @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model BookDetail {
+  id                String  @id @default(uuid())
+  authorId          String  @unique
+  title             String
+  subtitle          String?
+  category          String?
+  language          String?
+  targetAudience    String?
+  goalOfBook        String?
+  publishingPackage String?
+  expectedTimeline  String?
+  description       String?
+  author            Author  @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model Agreement {
+  id                  String   @id @default(uuid())
+  authorId            String   @unique
+  digitalSignatureUrl String
+  termsAccepted       Boolean  @default(true)
+  privacyAccepted     Boolean  @default(true)
+  signedAt            DateTime @default(now())
+  author              Author   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model TrackingData {
+  id              String  @id @default(uuid())
+  authorId        String  @unique
+  ipAddress       String?
+  latitude        Float?
+  longitude       Float?
+  browser         String?
+  os              String?
+  timezone        String?
+  language        String?
+  deviceType      String?
+  referralSource  String?
+  utmSource       String?
+  utmMedium       String?
+  utmCampaign     String?
+  facebookClickId String?
+  googleClickId   String?
+  landingPageUrl  String?
+  currentUrl      String?
+  country         String?
+  state           String?
+  city            String?
+  author          Author  @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model WorkflowLog {
+  id        String   @id @default(uuid())
+  authorId  String
+  action    String // e.g., "PDF_GENERATED", "EMAIL_SENT"
+  status    String // "SUCCESS", "FAILED"
+  message   String?
+  createdAt DateTime @default(now())
+  author    Author   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model IntegrationLog {
+  id         String   @id @default(uuid())
+  service    String // "HUBSPOT", "BREVO", "FACEBOOK_CAPI"
+  endpoint   String?
+  payload    Json?
+  response   Json?
+  status     String // "SUCCESS", "FAILED"
+  error      String?
+  retryCount Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Task {
+  id           String    @id @default(uuid())
+  title        String
+  description  String?
+  status       String    @default("TODO") // "TODO", "IN_PROGRESS", "DONE"
+  priority     String    @default("MEDIUM") // "LOW", "MEDIUM", "HIGH"
+  dueDate      DateTime?
+  assignedToId String?
+  authorId     String?
+  assignedTo   User?     @relation(fields: [assignedToId], references: [id], onDelete: SetNull)
+  author       Author?   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model IntegrationSetting {
+  id          String   @id @default(uuid())
+  serviceName String   @unique // e.g., "HUBSPOT_API_KEY", "BREVO_API_KEY"
+  configValue String // Encrypted or plain text
+  isActive    Boolean  @default(true)
+  updatedAt   DateTime @updatedAt
+}
