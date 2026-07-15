@@ -2,8 +2,10 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 
 export default function OnboardingPage() {
+  const router = useRouter();
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -32,6 +34,9 @@ export default function OnboardingPage() {
     setTimeout(() => {
       setIsLoading(false);
       setIsSuccess(true);
+      setTimeout(() => {
+        router.push('/thank-you');
+      }, 500);
     }, 1200);
   };
 

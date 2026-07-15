@@ -7,9 +7,12 @@ import { useRouter } from 'next/navigation';
 export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || !password) return;
     setIsLoading(true);
 
     setTimeout(() => {
@@ -60,6 +63,7 @@ export default function LoginPage() {
             );
             transform: rotate(45deg);
             animation: shimmer 6s infinite linear;
+            pointer-events: none;
         }
         @keyframes shimmer {
             0% { transform: translate(-30%, -30%) rotate(45deg); }
@@ -89,14 +93,14 @@ export default function LoginPage() {
           <form className="space-y-4" onSubmit={handleLogin}>
             <div>
               <label className="block text-xs font-medium text-[#c2c6d8] mb-2 ml-1 uppercase tracking-widest" htmlFor="email">Email Address</label>
-              <input className="w-full bg-[#1b2b3f]/50 border border-[#424656]/30 rounded-lg px-6 py-4 text-sm text-[#d3e4fe] placeholder:text-[#8c90a1] focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow" id="email" name="email" placeholder="name@company.com" required type="email" />
+              <input className="w-full bg-[#1b2b3f]/50 border border-[#424656]/30 rounded-lg px-6 py-4 text-sm text-[#d3e4fe] placeholder:text-[#8c90a1] focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow relative z-20" id="email" name="email" placeholder="name@company.com" required type="email" value={email} onChange={e => setEmail(e.target.value)} />
             </div>
             <div>
               <div className="flex justify-between items-center mb-2 ml-1">
                 <label className="block text-xs font-medium text-[#c2c6d8] uppercase tracking-widest" htmlFor="password">Password</label>
-                <Link className="text-xs font-medium text-[#b3c5ff] hover:text-blue-500 transition-colors" href="#">Forgot password?</Link>
+                <Link className="text-xs font-medium text-[#b3c5ff] hover:text-blue-500 transition-colors relative z-20" href="#">Forgot password?</Link>
               </div>
-              <input className="w-full bg-[#1b2b3f]/50 border border-[#424656]/30 rounded-lg px-6 py-4 text-sm text-[#d3e4fe] placeholder:text-[#8c90a1] focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow" id="password" name="password" placeholder="••••••••" required type="password" />
+              <input className="w-full bg-[#1b2b3f]/50 border border-[#424656]/30 rounded-lg px-6 py-4 text-sm text-[#d3e4fe] placeholder:text-[#8c90a1] focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow relative z-20" id="password" name="password" placeholder="••••••••" required type="password" value={password} onChange={e => setPassword(e.target.value)} />
             </div>
             <button className="w-full bg-blue-600 text-white text-xs font-medium py-4 rounded-lg hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-6" type="submit" disabled={isLoading}>
               {isLoading ? (
