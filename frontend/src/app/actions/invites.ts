@@ -10,26 +10,24 @@ export async function createAndSendInvite(email: string) {
     }
 
     // Check if email already has an invite
-    const existingInvite = await prisma.invite.findUnique({
+    let invite = await prisma.invite.findUnique({
       where: { email }
     });
 
-    if (existingInvite) {
-      return { success: false, error: 'Invite already sent to this email' };
+    if (!invite) {
+      invite = await prisma.invite.create({
+        data: {
+          email
+        }
+      });
     }
 
-    const invite = await prisma.invite.create({
-      data: {
-        email
-      }
-    });
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.URL || 'http://localhost:3000';
+    const inviteUrl = `${appUrl}/onboarding/${invite.token}`;
 
     // Send email using Brevo API
     const apiKey = process.env.BREVO_API_KEY;
     if (apiKey) {
-      const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.URL || 'http://localhost:3000';
-      const inviteUrl = `${appUrl}/onboarding/${invite.token}`;
-
       await fetch("https://api.brevo.com/v3/smtp/email", {
         method: "POST",
         headers: {
@@ -59,11 +57,11 @@ export async function createAndSendInvite(email: string) {
       });
       console.log(`[EMAIL DISPATCH SUCCESS] Sent to ${email}. URL: ${inviteUrl}`);
     } else {
-      console.warn(`[EMAIL DISPATCH SKIPPED] BREVO_API_KEY is not set. URL: /onboarding/${invite.token}`);
+      console.warn(`[EMAIL DISPATCH SKIPPED] BREVO_API_KEY is not set. URL: ${inviteUrl}`);
     }
 
     revalidatePath('/admin/users');
-    return { success: true, token: invite.token };
+    return { success: true, token: invite.token, inviteUrl };
   } catch (error: any) {
     console.error('Invite error:', error);
     return { success: false, error: error?.message || 'Failed to generate invite' };

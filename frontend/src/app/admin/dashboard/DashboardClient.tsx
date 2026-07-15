@@ -44,6 +44,7 @@ export default function DashboardClient({
   const [isInviting, setIsInviting] = useState(false);
   const [inviteMessage, setInviteMessage] = useState('');
   const [inviteError, setInviteError] = useState('');
+  const [inviteUrl, setInviteUrl] = useState('');
   
   const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,18 +52,31 @@ export default function DashboardClient({
     setIsInviting(true);
     setInviteMessage('');
     setInviteError('');
+    setInviteUrl('');
     
     // Pass name as well if we add it to the action later, for now just email
     const res = await createAndSendInvite(inviteEmail);
     if (res.success) {
-      setInviteMessage(`Invite sent to ${inviteEmail}.`);
-      setInviteName('');
-      setInviteEmail('');
-      setTimeout(() => setInviteModalOpen(false), 2000);
+      setInviteMessage(`Invite successfully processed for ${inviteEmail}.`);
+      if (res.inviteUrl) {
+        setInviteUrl(res.inviteUrl);
+      } else {
+        setInviteName('');
+        setInviteEmail('');
+        setTimeout(() => {
+          setInviteModalOpen(false);
+          setInviteMessage('');
+        }, 2000);
+      }
     } else {
       setInviteError(res.error || 'Failed to send invite');
     }
     setIsInviting(false);
+  };
+
+  const copyInviteLink = () => {
+    navigator.clipboard.writeText(inviteUrl);
+    setInviteMessage('Link copied to clipboard!');
   };
 
   return (
@@ -410,6 +424,19 @@ export default function DashboardClient({
                   )}
                 </button>
               </div>
+
+              {inviteUrl && (
+                <div className="pt-2">
+                  <button 
+                    type="button" 
+                    onClick={copyInviteLink}
+                    className="w-full py-3 bg-[#102034] text-[#b3c5ff] border border-[#b3c5ff]/30 rounded-lg text-sm font-medium hover:bg-[#1b2b3f] transition-colors flex items-center justify-center gap-2"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                    Copy Invite Link
+                  </button>
+                </div>
+              )}
 
               {inviteMessage && <div className="mt-4 p-3 bg-green-500/10 border border-green-500/20 text-green-400 rounded-lg text-sm text-center">{inviteMessage}</div>}
               {inviteError && <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg text-sm text-center">{inviteError}</div>}
