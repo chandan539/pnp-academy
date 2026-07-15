@@ -145,10 +145,7 @@ export default function LoginPage() {
         
         {/* Footer */}
         <footer className="mt-10 text-center">
-          <p className="text-sm text-[#c2c6d8]">
-            Don't have an account? 
-            <Link className="text-[#b3c5ff] font-bold hover:underline ml-1" href="/onboarding">Apply for Academy</Link>
-          </p>
+
           <div className="flex items-center justify-center gap-6 mt-10 opacity-40">
             <Link className="text-xs font-medium text-[#c2c6d8] hover:text-[#d3e4fe]" href="#">Privacy</Link>
             <Link className="text-xs font-medium text-[#c2c6d8] hover:text-[#d3e4fe]" href="#">Terms</Link>

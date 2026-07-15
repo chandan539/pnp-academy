@@ -7,6 +7,10 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  
+  const [accountNumber, setAccountNumber] = useState('');
+  const [confirmAccountNumber, setConfirmAccountNumber] = useState('');
+  const [accountError, setAccountError] = useState('');
 
   const nextStep = () => setStep(prev => Math.min(prev + 1, 3));
   const prevStep = () => setStep(prev => Math.max(prev - 1, 1));
@@ -17,6 +21,12 @@ export default function OnboardingPage() {
       nextStep();
       return;
     }
+    
+    if (accountNumber !== confirmAccountNumber) {
+      setAccountError('Account numbers do not match');
+      return;
+    }
+    setAccountError('');
     
     setIsLoading(true);
     setTimeout(() => {
@@ -180,9 +190,14 @@ export default function OnboardingPage() {
                       </div>
                       <div className="flex flex-col gap-2">
                         <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="account_number">Account Number</label>
-                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="account_number" placeholder="•••• •••• ••••" type="password" />
+                        <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="account_number" placeholder="•••• •••• ••••" type="password" value={accountNumber} onChange={(e) => setAccountNumber(e.target.value)} />
                       </div>
                       <div className="flex flex-col gap-2">
+                        <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="confirm_account_number">Confirm Account Number</label>
+                        <input required className={`bg-[#102034] border ${accountError ? 'border-red-500' : 'border-[#424656]'} text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all`} id="confirm_account_number" placeholder="Enter account number again" type="text" value={confirmAccountNumber} onChange={(e) => setConfirmAccountNumber(e.target.value)} />
+                        {accountError && <p className="text-red-500 text-xs mt-1">{accountError}</p>}
+                      </div>
+                      <div className="flex flex-col gap-2 md:col-span-2">
                         <label className="text-xs font-medium text-[#c2c6d8]" htmlFor="ifsc_code">IFSC Code</label>
                         <input required className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-xl p-4 text-sm focus:outline-none input-glow transition-all" id="ifsc_code" placeholder="PNPA0001234" type="text" />
                       </div>
