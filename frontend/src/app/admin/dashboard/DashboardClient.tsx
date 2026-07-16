@@ -20,6 +20,7 @@ const navItems = [
   { icon: FileText, label: "Pages", href: "/admin/pages" },
   { icon: UserPlus, label: "Pre-Invites", href: "/admin/pre-invites" },
   { icon: Activity, label: "Reports", href: "/admin/reports" },
+  { icon: HelpCircle, label: "Help & Docs", href: "/admin/help" },
 ];
 
 export default function DashboardClient({ 
@@ -89,7 +90,7 @@ export default function DashboardClient({
   };
 
   return (
-    <div className="bg-brand-light-bg text-brand-text min-h-screen font-sans selection:bg-brand-primary/30 selection:text-brand-white">
+    <div className="bg-brand-light-bg text-brand-white min-h-screen font-sans selection:bg-brand-primary/30 selection:text-brand-white">
       <style dangerouslySetInnerHTML={{ __html: `
         .glass-panel {
             background: rgba(255, 255, 255, 0.9);
@@ -106,8 +107,8 @@ export default function DashboardClient({
       {/* Sidebar Navigation */}
       <aside className={`hidden lg:flex flex-col h-screen fixed left-0 top-0 bg-brand-white border-r border-brand-primary/20 shadow-sm z-50 transition-all duration-300 ${isSidebarCollapsed ? 'w-20' : 'w-64'}`}>
         <div className={`p-6 flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-4'}`}>
-          <div className="w-10 h-10 rounded-lg bg-brand-primary flex-shrink-0 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <div className="flex items-center justify-center flex-shrink-0">
+            <img src="/api/branding/logo" alt="P&P Academy Logo" className="h-10 w-auto" />
           </div>
           {!isSidebarCollapsed && (
             <div className="overflow-hidden whitespace-nowrap">
@@ -170,7 +171,7 @@ export default function DashboardClient({
           <div className="flex items-center gap-6 flex-1">
             <div className="relative max-w-md w-full hidden sm:block">
               <svg className="absolute left-4 top-1/2 -translate-y-1/2 text-brand-text/70" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input className="w-full bg-brand-white border border-brand-primary/20/50 rounded-lg pl-12 pr-4 py-2 text-sm text-brand-text focus:ring-1 focus:ring-blue-400 focus:border-blue-400 outline-none" placeholder="Search analytics, authors, or reports..." type="text" />
+              <input className="w-full bg-brand-white border border-brand-primary/20/50 rounded-lg pl-12 pr-4 py-2 text-sm text-brand-text focus:ring-1 focus:ring-blue-400 focus:border-brand-primary/40 outline-none" placeholder="Search analytics, authors, or reports..." type="text" />
             </div>
             <div className="hidden lg:flex items-center gap-6">
               {/* Top navigation removed as per request */}
@@ -187,12 +188,12 @@ export default function DashboardClient({
                 onClick={() => setProfileOpen(!profileOpen)}
                 className="flex items-center gap-2 lg:gap-3 p-1.5 lg:p-2 bg-brand-white hover:bg-brand-light-bg border border-brand-primary/20 rounded-full lg:rounded-xl transition-all"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-secondary to-brand-primary-dark flex items-center justify-center text-brand-white font-medium text-sm shadow-inner">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-brand-secondary to-brand-primary-dark flex items-center justify-center text-brand-text font-medium text-sm shadow-inner">
                   {currentUser?.name ? currentUser.name.substring(0, 2).toUpperCase() : 'AD'}
                 </div>
                 <div className="hidden lg:block text-left mr-2">
-                  <p className="text-sm font-medium text-brand-white leading-tight">{currentUser?.name || 'Administrator'}</p>
-                  <p className="text-xs text-blue-200/50 mt-0.5">{currentUser?.role?.replace('_', ' ') || 'Admin'}</p>
+                  <p className="text-sm font-medium text-brand-text leading-tight">{currentUser?.name || 'Administrator'}</p>
+                  <p className="text-xs text-brand-text/50 mt-0.5">{currentUser?.role?.replace('_', ' ') || 'Admin'}</p>
                 </div>
                 <svg className={`w-4 h-4 text-brand-text/70 transition-transform ${profileOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </button>
@@ -221,7 +222,7 @@ export default function DashboardClient({
                       await fetch('/api/auth/logout', { method: 'POST' });
                       window.location.href = '/login';
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-2 text-sm text-[#ffb4ab] hover:bg-red-500/10 transition-colors text-left font-medium"
+                    className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-500/10 transition-colors text-left font-medium"
                   >
                     <svg className="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                     Logout
@@ -358,8 +359,8 @@ export default function DashboardClient({
                             </td>
                             <td className="px-6 py-4">
                               <span className={`inline-flex items-center px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
-                                author.status === 'SUBMITTED' ? 'bg-[#ffb59d]/10 text-brand-accent border-[#ffb59d]/20' : 
-                                'bg-[#b3c5ff]/10 text-brand-primary border-[#b3c5ff]/20'
+                                author.status === 'SUBMITTED' ? 'bg-brand-accent text-brand-text border-brand-accent/50' : 
+                                'bg-brand-primary/10 text-brand-primary border-brand-primary/20'
                               }`}>
                                 {author.status}
                               </span>
@@ -444,8 +445,8 @@ export default function DashboardClient({
                 </div>
               )}
 
-              {inviteMessage && <div className="mt-4 p-3 bg-green-500/10 border border-green-500/20 text-green-400 rounded-lg text-sm text-center">{inviteMessage}</div>}
-              {inviteError && <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded-lg text-sm text-center">{inviteError}</div>}
+              {inviteMessage && <div className="mt-4 p-3 bg-green-500/10 border border-green-600/30 text-green-700 rounded-lg text-sm text-center">{inviteMessage}</div>}
+              {inviteError && <div className="mt-4 p-3 bg-red-500/10 border border-red-600/30 text-red-600 rounded-lg text-sm text-center">{inviteError}</div>}
             </form>
           </div>
         </div>

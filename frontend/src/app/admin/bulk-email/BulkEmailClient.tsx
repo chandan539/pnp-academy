@@ -30,7 +30,7 @@ export default function BulkEmailClient() {
       </div>
 
       {message && (
-        <div className={`p-4 rounded-lg mb-6 text-sm font-medium ${message.type === 'success' ? 'bg-[#b3c5ff]/10 text-brand-primary border border-[#b3c5ff]/20' : 'bg-brand-accent/10 text-[#ffb4ab] border border-[#ffb4ab]/20'}`}>
+        <div className={`p-4 rounded-lg mb-6 text-sm font-medium ${message.type === 'success' ? 'bg-[#b3c5ff]/10 text-brand-primary border border-[#b3c5ff]/20' : 'bg-brand-accent/10 text-red-600 border border-[#ffb4ab]/20'}`}>
           {message.text}
         </div>
       )}
@@ -43,7 +43,7 @@ export default function BulkEmailClient() {
             name="subject" 
             required
             placeholder="e.g., Important Update for Authors"
-            className="w-full bg-brand-white border border-brand-primary/20/50 rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-blue-400 focus:border-blue-400 outline-none"
+            className="w-full bg-brand-white border border-brand-primary/20/50 rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-blue-400 focus:border-brand-primary/40 outline-none"
           />
         </div>
 
@@ -54,7 +54,7 @@ export default function BulkEmailClient() {
             required
             rows={12}
             placeholder="<p>Hello authors...</p>"
-            className="w-full bg-brand-white border border-brand-primary/20/50 rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-blue-400 focus:border-blue-400 outline-none custom-scrollbar"
+            className="w-full bg-brand-white border border-brand-primary/20/50 rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-blue-400 focus:border-brand-primary/40 outline-none custom-scrollbar"
           />
           <p className="text-xs text-brand-text/70 mt-2">You can use standard HTML tags like &lt;b&gt;, &lt;a&gt;, &lt;p&gt;, etc.</p>
         </div>
@@ -67,7 +67,7 @@ export default function BulkEmailClient() {
           >
             {isPending ? (
               <>
-                <svg className="animate-spin h-5 w-5 text-brand-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <svg className="animate-spin h-5 w-5 text-brand-text" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                 Sending...
               </>
             ) : (

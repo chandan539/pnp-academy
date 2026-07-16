@@ -4,9 +4,11 @@ import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer";
 
 import { getDynamicPage } from '@/app/actions/pages';
+import { getSettings } from "@/app/actions/settings";
 
 export default async function Home() {
   const dynamicPage = await getDynamicPage('home');
+  const settings = await getSettings();
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center relative overflow-hidden">
@@ -19,10 +21,10 @@ export default async function Home() {
           
           <div className="space-y-4">
             <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80 mb-6">
-              PnP Academy V1.0
+              {settings.website_title || 'PnP Academy'} V1.0
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-brand-white">
+            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-brand-text">
               Premium Book Publishing Services <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">
                 For Limited Premium Authors
@@ -36,15 +38,15 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16 text-left">
             <div className="p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-brand-primary dark:text-brand-primary rounded-xl flex items-center justify-center mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-brand-primary dark:text-brand-primary rounded-xl flex items-center justify-center mb-4 p-1">
+                <img src="/api/branding/logo" alt="Logo" className="w-full h-full object-contain" />
               </div>
               <h3 className="font-bold text-lg mb-2">Author CRM</h3>
               <p className="text-muted-foreground text-sm">Manage the complete author lifecycle from a single, unified dashboard.</p>
             </div>
             
             <div className="p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-xl flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-700 rounded-xl flex items-center justify-center mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
               </div>
               <h3 className="font-bold text-lg mb-2">Workflow Automation</h3>

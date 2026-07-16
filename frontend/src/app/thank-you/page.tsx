@@ -34,8 +34,8 @@ export default async function ThankYouPage() {
       <main className="relative z-10 w-full max-w-lg text-center">
         {/* Brand Identity */}
         <div className="flex flex-col items-center mb-8">
-          <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-green-600/20">
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          <div className="flex items-center justify-center mb-6">
+            <img src="/api/branding/logo" alt="P&P Academy Logo" className="h-24 w-auto" />
           </div>
           <h1 className="text-4xl font-semibold text-brand-text tracking-tighter mb-4">Details Submitted!</h1>
           <p className="text-base text-brand-text/80 leading-relaxed max-w-md mx-auto">

@@ -38,18 +38,18 @@ export default function SecurityClient() {
 
   return (
     <DashboardClient authors={[]} overrideTitle="Security Settings" overrideSubtitle="Manage your account security and password.">
-      <div className="bg-brand-white rounded-2xl border border-blue-500/10 overflow-hidden max-w-4xl mx-auto">
-        <div className="p-6 sm:p-10 border-b border-blue-500/10">
-          <h2 className="text-xl font-semibold text-brand-white">Change Password</h2>
-          <p className="text-blue-200/60 mt-1">Update your password to keep your account secure.</p>
+      <div className="bg-brand-white rounded-2xl border border-brand-primary/10 overflow-hidden max-w-4xl mx-auto">
+        <div className="p-6 sm:p-10 border-b border-brand-primary/10">
+          <h2 className="text-xl font-semibold text-brand-text">Change Password</h2>
+          <p className="text-brand-text/60 mt-1">Update your password to keep your account secure.</p>
         </div>
         
         <div className="p-6 sm:p-10">
           <form className="max-w-md" onSubmit={handleSubmit}>
             {status.message && (
               <div className={`p-4 rounded-xl mb-6 text-sm font-medium ${
-                status.type === 'error' ? 'bg-red-500/10 text-red-400 border border-red-500/20' : 
-                status.type === 'success' ? 'bg-green-500/10 text-green-400 border border-green-500/20' : ''
+                status.type === 'error' ? 'bg-red-100 text-red-800 border border-red-300' : 
+                status.type === 'success' ? 'bg-green-100 text-green-800 border border-green-300' : ''
               }`}>
                 {status.message}
               </div>
@@ -57,36 +57,36 @@ export default function SecurityClient() {
             
             <div className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-blue-200 mb-1.5">Current Password</label>
+                <label className="block text-sm font-medium text-brand-text/70 mb-1.5">Current Password</label>
                 <input 
                   type="password" 
                   value={currentPassword}
                   onChange={e => setCurrentPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-brand-light-bg border border-brand-primary/20 rounded-xl text-brand-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
+                  className="w-full px-4 py-2.5 bg-brand-light-bg border border-brand-primary/20 rounded-xl text-brand-text focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
                   placeholder="Enter current password"
                   required
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-blue-200 mb-1.5">New Password</label>
+                <label className="block text-sm font-medium text-brand-text/70 mb-1.5">New Password</label>
                 <input 
                   type="password" 
                   value={newPassword}
                   onChange={e => setNewPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-brand-light-bg border border-brand-primary/20 rounded-xl text-brand-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
+                  className="w-full px-4 py-2.5 bg-brand-light-bg border border-brand-primary/20 rounded-xl text-brand-text focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
                   placeholder="Enter new password"
                   required
                 />
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-blue-200 mb-1.5">Confirm New Password</label>
+                <label className="block text-sm font-medium text-brand-text/70 mb-1.5">Confirm New Password</label>
                 <input 
                   type="password" 
                   value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-brand-light-bg border border-brand-primary/20 rounded-xl text-brand-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
+                  className="w-full px-4 py-2.5 bg-brand-light-bg border border-brand-primary/20 rounded-xl text-brand-text focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
                   placeholder="Confirm new password"
                   required
                 />

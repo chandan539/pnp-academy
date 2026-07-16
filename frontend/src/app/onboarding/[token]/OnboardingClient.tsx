@@ -64,7 +64,7 @@ export default function OnboardingClient({ inviteEmail, inviteToken }: { inviteE
   };
 
   return (
-    <div className="min-h-screen bg-brand-light-bg text-brand-text selection:bg-brand-primary/30 font-sans">
+    <div className="min-h-screen bg-brand-light-bg text-brand-white selection:bg-brand-primary/30 font-sans">
       <style dangerouslySetInnerHTML={{ __html: `
         .glass-panel {
             background: rgba(16, 32, 52, 0.8);
@@ -192,7 +192,7 @@ export default function OnboardingClient({ inviteEmail, inviteToken }: { inviteE
               </div>
 
               {errorMsg && (
-                <div className="bg-red-500/10 border border-red-500/30 text-red-400 p-4 rounded-xl text-sm mb-4">
+                <div className="bg-red-500/10 border border-red-500/30 text-red-600 p-4 rounded-xl text-sm mb-4">
                   {errorMsg}
                 </div>
               )}
@@ -203,7 +203,7 @@ export default function OnboardingClient({ inviteEmail, inviteToken }: { inviteE
                   <button 
                     type="submit" 
                     disabled={isLoading || isSuccess}
-                    className={`w-full md:w-auto px-10 py-3 rounded-xl text-xs font-medium text-brand-white transition-all flex items-center justify-center gap-2 ${
+                    className={`w-full md:w-auto px-10 py-3 rounded-xl text-xs font-medium text-brand-text transition-all flex items-center justify-center gap-2 ${
                       isSuccess ? 'bg-green-600' : 'bg-brand-primary hover:bg-blue-700'
                     }`}
                   >

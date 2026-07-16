@@ -6,6 +6,40 @@ import { saveSettings } from '@/app/actions/settings';
 export default function SettingsForm({ initialData }: { initialData: Record<string, string> }) {
   const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState('');
+  const [logoBase64, setLogoBase64] = useState<string>(initialData.brand_logo_base64 || '');
+  const [faviconBase64, setFaviconBase64] = useState<string>(initialData.website_favicon_base64 || '');
+
+  const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert('Logo must be less than 2MB');
+        e.target.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoBase64(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFaviconChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 1 * 1024 * 1024) {
+        alert('Favicon must be less than 1MB');
+        e.target.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFaviconBase64(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,7 +67,7 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
     <form onSubmit={handleSubmit} className="max-w-4xl mx-auto pb-12">
       
       {message && (
-        <div className={`mb-6 p-4 rounded-md border flex items-center gap-3 ${message.includes('success') ? 'bg-green-500/10 border-green-500/20 text-green-400' : 'bg-red-500/10 border-red-500/20 text-red-400'}`}>
+        <div className={`mb-6 p-4 rounded-md border flex items-center gap-3 ${message.includes('success') ? 'bg-green-500/10 border-green-600/30 text-green-700' : 'bg-red-500/10 border-red-600/30 text-red-600'}`}>
           {message.includes('success') ? (
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
           ) : (
@@ -62,6 +96,74 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
               </div>
             </div>
             <p className="text-xs text-brand-text/70 mt-2">Select the default service used when sending batch emails to authors.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Branding & Appearance */}
+      <div className={sectionClasses}>
+        <div className={headerClasses}>
+          <h3 className="font-semibold text-base text-brand-text">Branding & Appearance</h3>
+          <p className="text-xs text-brand-text/70 mt-1">Customize application colors and logo.</p>
+        </div>
+        <div className={contentClasses}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6 pb-4 border-b border-brand-primary/10">
+              <div>
+                <label className={labelClasses}>Website Title</label>
+                <input name="website_title" defaultValue={initialData.website_title || 'PnP Academy'} placeholder="e.g. PnP Academy - Premium SaaS" className={inputClasses} />
+              </div>
+              <div>
+                <label className={labelClasses}>Website Favicon (Max 1MB)</label>
+                <div className="flex items-center gap-4">
+                  {faviconBase64 && (
+                    <img src={faviconBase64} alt="Preview" className="h-10 w-10 object-contain border rounded p-1 bg-white" />
+                  )}
+                  <input type="file" accept="image/x-icon,image/png,image/jpeg" onChange={handleFaviconChange} className="text-sm" />
+                  <input type="hidden" name="website_favicon_base64" value={faviconBase64} />
+                </div>
+              </div>
+            </div>
+            <div>
+              <label className={labelClasses}>Primary Color</label>
+              <div className="flex items-center gap-3">
+                <input type="color" name="brand_primary" defaultValue={initialData.brand_primary || '#1E4FA3'} className="h-10 w-12 rounded cursor-pointer border-0 p-0" />
+                <input type="text" defaultValue={initialData.brand_primary || '#1E4FA3'} placeholder="#1E4FA3" className={`${inputClasses} flex-1`} onChange={(e) => {
+                  const colorInput = e.target.previousElementSibling as HTMLInputElement;
+                  if (colorInput) colorInput.value = e.target.value;
+                }} />
+              </div>
+            </div>
+            <div>
+              <label className={labelClasses}>Navy (Dark) Color</label>
+              <div className="flex items-center gap-3">
+                <input type="color" name="brand_primary_dark" defaultValue={initialData.brand_primary_dark || '#0F2B5B'} className="h-10 w-12 rounded cursor-pointer border-0 p-0" />
+                <input type="text" defaultValue={initialData.brand_primary_dark || '#0F2B5B'} placeholder="#0F2B5B" className={`${inputClasses} flex-1`} onChange={(e) => {
+                  const colorInput = e.target.previousElementSibling as HTMLInputElement;
+                  if (colorInput) colorInput.value = e.target.value;
+                }} />
+              </div>
+            </div>
+            <div>
+              <label className={labelClasses}>Accent (Yellow) Color</label>
+              <div className="flex items-center gap-3">
+                <input type="color" name="brand_accent" defaultValue={initialData.brand_accent || '#FFC107'} className="h-10 w-12 rounded cursor-pointer border-0 p-0" />
+                <input type="text" defaultValue={initialData.brand_accent || '#FFC107'} placeholder="#FFC107" className={`${inputClasses} flex-1`} onChange={(e) => {
+                  const colorInput = e.target.previousElementSibling as HTMLInputElement;
+                  if (colorInput) colorInput.value = e.target.value;
+                }} />
+              </div>
+            </div>
+            <div>
+              <label className={labelClasses}>Upload Logo (Max 2MB)</label>
+              <div className="flex items-center gap-4">
+                {logoBase64 && (
+                  <img src={logoBase64} alt="Preview" className="h-10 w-auto object-contain border rounded p-1 bg-white" />
+                )}
+                <input type="file" accept="image/*" onChange={handleLogoChange} className="text-sm" />
+                <input type="hidden" name="brand_logo_base64" value={logoBase64} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -164,7 +266,7 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
         >
           {isPending ? (
             <>
-              <svg className="animate-spin h-4 w-4 text-brand-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+              <svg className="animate-spin h-4 w-4 text-brand-text" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
               Saving...
             </>
           ) : (

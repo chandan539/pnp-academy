@@ -187,8 +187,8 @@ export default function AuthorsClient({ initialAuthors }: { initialAuthors: any[
                   </td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
-                      author.status === 'SUBMITTED' ? 'bg-[#ffb59d]/10 text-brand-accent border-[#ffb59d]/20' : 
-                      'bg-[#b3c5ff]/10 text-brand-primary border-[#b3c5ff]/20'
+                      author.status === 'SUBMITTED' ? 'bg-brand-accent text-brand-text border-brand-accent/50' : 
+                      'bg-brand-primary/10 text-brand-primary border-brand-primary/20'
                     }`}>
                       {author.status}
                     </span>
@@ -199,13 +199,13 @@ export default function AuthorsClient({ initialAuthors }: { initialAuthors: any[
                   <td className="px-6 py-4 text-right flex items-center justify-end gap-2">
                     <Link 
                       href={`/admin/authors/${author.id}`}
-                      className="text-brand-primary hover:text-brand-white text-xs font-medium transition-colors p-2"
+                      className="text-brand-primary hover:text-brand-text text-xs font-medium transition-colors p-2"
                     >
                       View
                     </Link>
                     <button 
                       onClick={() => openDeleteModal(author.id)}
-                      className="text-[#ffb4ab] hover:text-red-400 text-xs font-medium transition-colors p-2"
+                      className="text-red-600 hover:text-red-600 text-xs font-medium transition-colors p-2"
                       title="Super Admin Only"
                     >
                       Delete
@@ -222,7 +222,7 @@ export default function AuthorsClient({ initialAuthors }: { initialAuthors: any[
       {deleteModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
           <div className="bg-brand-white border border-red-500/30 rounded-xl p-8 max-w-md w-full shadow-2xl shadow-red-900/20">
-            <h3 className="text-xl font-bold text-red-400 mb-4">CRITICAL WARNING</h3>
+            <h3 className="text-xl font-bold text-red-600 mb-4">CRITICAL WARNING</h3>
             <p className="text-sm text-brand-text/80 mb-6 leading-relaxed">
               You are about to permanently delete this author's entire record. 
               This action <strong>cannot be undone</strong> and will cascade delete all associated activity logs, integration logs, and tasks.
@@ -239,7 +239,7 @@ export default function AuthorsClient({ initialAuthors }: { initialAuthors: any[
               <button 
                 onClick={confirmDelete}
                 disabled={deleteCountdown > 0 || isDeleting}
-                className="px-6 py-2 rounded-lg text-sm font-bold bg-red-600 text-brand-white hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="px-6 py-2 rounded-lg text-sm font-bold bg-red-600 text-brand-text hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
               >
                 {isDeleting ? "Deleting..." : (deleteCountdown > 0 ? `Wait ${deleteCountdown}s` : "Confirm Delete")}
               </button>
