@@ -40,14 +40,14 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-primary-dark text-brand-white flex items-center justify-center p-4 selection:bg-brand-secondary/30 overflow-hidden relative">
+    <div className="min-h-screen bg-brand-light-bg text-brand-text flex items-center justify-center p-4 selection:bg-brand-primary/30 overflow-hidden relative">
       <style dangerouslySetInnerHTML={{ __html: `
         .glass-card {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
         }
         .glow-effect {
             position: absolute;
@@ -98,26 +98,26 @@ export default function LoginPage() {
       <main className="relative z-10 w-full max-w-[420px]">
         {/* Brand Identity */}
         <div className="flex flex-col items-center mb-16">
-          <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/20">
+          <div className="w-12 h-12 bg-brand-primary rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/20">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
           </div>
-          <h1 className="text-3xl font-semibold text-brand-white tracking-tighter">PnP Academy</h1>
-          <p className="text-sm text-brand-light-bg mt-2">Premium SaaS for Modern Authors</p>
+          <h1 className="text-3xl font-semibold text-brand-text tracking-tighter">PnP Academy</h1>
+          <p className="text-sm text-brand-text/80 mt-2">Premium SaaS for Modern Authors</p>
         </div>
         
         {/* Login Card */}
         <div className="glass-card rounded-xl p-10 shimmer">
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-xs font-medium text-brand-light-bg mb-2 ml-1 uppercase tracking-widest" htmlFor="email">Email Address</label>
-              <input className="w-full bg-brand-primary/50 border border-brand-primary/30 rounded-lg px-6 py-4 text-sm text-brand-white placeholder:text-[#8c90a1] focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow relative z-20" id="email" name="email" placeholder="name@company.com" required type="email" />
+              <label className="block text-xs font-medium text-brand-text/80 mb-2 ml-1 uppercase tracking-widest" htmlFor="email">Email Address</label>
+              <input className="w-full bg-brand-white/50 border border-brand-primary/20/30 rounded-lg px-6 py-4 text-sm text-brand-text placeholder:text-brand-text/70 focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow relative z-20" id="email" name="email" placeholder="name@company.com" required type="email" />
             </div>
             <div>
               <div className="flex justify-between items-center mb-2 ml-1">
-                <label className="block text-xs font-medium text-brand-light-bg uppercase tracking-widest" htmlFor="password">Password</label>
-                <Link className="text-xs font-medium text-brand-secondary hover:text-blue-500 transition-colors relative z-20" href="#">Forgot password?</Link>
+                <label className="block text-xs font-medium text-brand-text/80 uppercase tracking-widest" htmlFor="password">Password</label>
+                <Link className="text-xs font-medium text-brand-primary hover:text-brand-primary transition-colors relative z-20" href="#">Forgot password?</Link>
               </div>
-              <input className="w-full bg-brand-primary/50 border border-brand-primary/30 rounded-lg px-6 py-4 text-sm text-brand-white placeholder:text-[#8c90a1] focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow relative z-20" id="password" name="password" placeholder="••••••••" required type="password" />
+              <input className="w-full bg-brand-white/50 border border-brand-primary/20/30 rounded-lg px-6 py-4 text-sm text-brand-text placeholder:text-brand-text/70 focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow relative z-20" id="password" name="password" placeholder="••••••••" required type="password" />
             </div>
             
             {error && (
@@ -126,10 +126,10 @@ export default function LoginPage() {
               </div>
             )}
             
-            <button className="w-full bg-blue-600 text-white text-xs font-medium py-4 rounded-lg hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-6 relative z-20" type="submit" disabled={isPending}>
+            <button className="w-full bg-brand-primary text-brand-white text-xs font-medium py-4 rounded-lg hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2 mt-6 relative z-20" type="submit" disabled={isPending}>
               {isPending ? (
                 <>
-                  <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                  <svg className="animate-spin h-5 w-5 text-brand-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                   Authenticating...
                 </>
               ) : (
@@ -147,9 +147,9 @@ export default function LoginPage() {
         <footer className="mt-10 text-center">
 
           <div className="flex items-center justify-center gap-6 mt-10 opacity-40">
-            <Link className="text-xs font-medium text-brand-light-bg hover:text-brand-white" href="#">Privacy</Link>
-            <Link className="text-xs font-medium text-brand-light-bg hover:text-brand-white" href="#">Terms</Link>
-            <Link className="text-xs font-medium text-brand-light-bg hover:text-brand-white" href="#">Contact</Link>
+            <Link className="text-xs font-medium text-brand-text/80 hover:text-brand-text" href="#">Privacy</Link>
+            <Link className="text-xs font-medium text-brand-text/80 hover:text-brand-text" href="#">Terms</Link>
+            <Link className="text-xs font-medium text-brand-text/80 hover:text-brand-text" href="#">Contact</Link>
           </div>
         </footer>
       </main>

@@ -4,14 +4,14 @@ import Link from 'next/link';
 
 export default async function ThankYouPage() {
   return (
-    <div className="min-h-screen bg-brand-primary-dark text-brand-white flex flex-col items-center justify-center p-4 selection:bg-brand-secondary/30 overflow-hidden relative font-sans">
+    <div className="min-h-screen bg-brand-light-bg text-brand-text flex flex-col items-center justify-center p-4 selection:bg-brand-primary/30 overflow-hidden relative font-sans">
       <style dangerouslySetInnerHTML={{ __html: `
         .glass-card {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
         }
         .glow-effect {
             position: absolute;
@@ -37,22 +37,22 @@ export default async function ThankYouPage() {
           <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-green-600/20">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
           </div>
-          <h1 className="text-4xl font-semibold text-brand-white tracking-tighter mb-4">Details Submitted!</h1>
-          <p className="text-base text-brand-light-bg leading-relaxed max-w-md mx-auto">
-            Thank you for submitting your details. You are now officially part of the <span className="text-brand-secondary font-medium">PnP Academy</span>. 
+          <h1 className="text-4xl font-semibold text-brand-text tracking-tighter mb-4">Details Submitted!</h1>
+          <p className="text-base text-brand-text/80 leading-relaxed max-w-md mx-auto">
+            Thank you for submitting your details. You are now officially part of the <span className="text-brand-primary font-medium">PnP Academy</span>. 
             We will notify you via email regarding the next steps.
           </p>
         </div>
         
         {/* Info Card */}
         <div className="glass-card rounded-xl p-8 mb-10 text-left">
-          <h3 className="text-sm font-medium text-brand-secondary mb-4 uppercase tracking-wider">What happens next?</h3>
+          <h3 className="text-sm font-medium text-brand-primary mb-4 uppercase tracking-wider">What happens next?</h3>
           <ul className="space-y-4">
             <li className="flex items-start gap-3">
-              <div className="mt-0.5 bg-brand-primary p-1 rounded text-brand-secondary">
+              <div className="mt-0.5 bg-brand-white p-1 rounded text-brand-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
               </div>
-              <p className="text-sm text-brand-white">Your author profile is currently being set up by our team (typically takes 24 hours).</p>
+              <p className="text-sm text-brand-text">Your author profile is currently being set up by our team (typically takes 24 hours).</p>
             </li>
           </ul>
         </div>

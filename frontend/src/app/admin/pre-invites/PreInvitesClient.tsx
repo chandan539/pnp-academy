@@ -22,9 +22,9 @@ export default function PreInvitesClient({ applications }: { applications: Invit
   return (
     <DashboardClient authors={[]} overrideTitle="Invites" overrideSubtitle="Review sent invites and their status">
       <div className="space-y-6 max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[#0b1c35] p-6 rounded-2xl border border-blue-500/10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-brand-white p-6 rounded-2xl border border-blue-500/10">
           <div>
-            <h1 className="text-2xl font-semibold text-white tracking-tight">Invited Authors</h1>
+            <h1 className="text-2xl font-semibold text-brand-white tracking-tight">Invited Authors</h1>
             <p className="text-blue-200/60 mt-1">Review sent invites and their onboarding status</p>
           </div>
           
@@ -36,21 +36,21 @@ export default function PreInvitesClient({ applications }: { applications: Invit
                 placeholder="Search name or email..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-brand-primary-dark border border-blue-500/20 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 transition-colors"
+                className="w-full bg-brand-light-bg border border-brand-primary/20 rounded-lg pl-9 pr-4 py-2 text-sm text-brand-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 transition-colors"
               />
             </div>
-            <button className="flex items-center justify-center gap-2 bg-brand-primary-dark border border-blue-500/20 text-blue-200 px-4 py-2 rounded-lg hover:bg-[#0f2442] transition-colors">
+            <button className="flex items-center justify-center gap-2 bg-brand-light-bg border border-brand-primary/20 text-blue-200 px-4 py-2 rounded-lg hover:bg-brand-light-bg transition-colors">
               <Filter className="w-4 h-4" />
               <span className="text-sm font-medium">Filter</span>
             </button>
           </div>
         </div>
 
-        <div className="bg-[#0b1c35] rounded-2xl border border-blue-500/10 overflow-hidden shadow-xl">
+        <div className="bg-brand-white rounded-2xl border border-blue-500/10 overflow-hidden shadow-xl">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-blue-500/10 bg-[#0f2442]">
+                <tr className="border-b border-blue-500/10 bg-brand-light-bg">
                   <th className="px-6 py-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Email Address</th>
                   <th className="px-6 py-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Status</th>
                   <th className="px-6 py-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Sent Date</th>
@@ -66,9 +66,9 @@ export default function PreInvitesClient({ applications }: { applications: Invit
                   </tr>
                 ) : (
                   filteredApps.map((app) => (
-                    <tr key={app.id} className="hover:bg-[#0f2442]/50 transition-colors">
+                    <tr key={app.id} className="hover:bg-brand-light-bg/50 transition-colors">
                       <td className="px-6 py-4">
-                        <div className="font-medium text-white">{app.email}</div>
+                        <div className="font-medium text-brand-white">{app.email}</div>
                       </td>
                       <td className="px-6 py-4">
                         <span className={`px-2 py-1 text-xs rounded-full font-medium ${
@@ -89,7 +89,7 @@ export default function PreInvitesClient({ applications }: { applications: Invit
                             navigator.clipboard.writeText(url);
                             alert('Invite link copied to clipboard!');
                           }}
-                          className="px-3 py-1.5 text-xs bg-[#0b1c35] border border-blue-500/30 hover:bg-[#0f2442] hover:border-blue-400 text-blue-200 rounded-lg transition-colors"
+                          className="px-3 py-1.5 text-xs bg-brand-white border border-blue-500/30 hover:bg-brand-light-bg hover:border-blue-400 text-blue-200 rounded-lg transition-colors"
                         >
                           Copy Link
                         </button>

@@ -26,34 +26,34 @@ export default async function SettingsPage() {
       <div className="w-full space-y-8">
         <SettingsForm initialData={initialSettings} />
 
-        <div className="bg-[#0b1c30] border border-[#1e293b] rounded-xl overflow-hidden">
-          <h3 className="text-base font-semibold text-brand-white px-6 py-4 border-b border-[#1e293b] bg-[#0b1c30]/50">Recent System Logs</h3>
+        <div className="bg-brand-white border border-[#1e293b] rounded-xl overflow-hidden">
+          <h3 className="text-base font-semibold text-brand-text px-6 py-4 border-b border-[#1e293b] bg-brand-white/50">Recent System Logs</h3>
           <div className="overflow-x-auto p-6">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-[#0b1c30]/50">
-                  <th className="px-6 py-3 text-xs font-medium text-[#8c90a1] uppercase tracking-wider">Service</th>
-                  <th className="px-6 py-3 text-xs font-medium text-[#8c90a1] uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-3 text-xs font-medium text-[#8c90a1] uppercase tracking-wider">Author</th>
-                  <th className="px-6 py-3 text-xs font-medium text-[#8c90a1] uppercase tracking-wider text-right">Timestamp</th>
+                <tr className="bg-brand-white/50">
+                  <th className="px-6 py-3 text-xs font-medium text-brand-text/70 uppercase tracking-wider">Service</th>
+                  <th className="px-6 py-3 text-xs font-medium text-brand-text/70 uppercase tracking-wider">Status</th>
+                  <th className="px-6 py-3 text-xs font-medium text-brand-text/70 uppercase tracking-wider">Author</th>
+                  <th className="px-6 py-3 text-xs font-medium text-brand-text/70 uppercase tracking-wider text-right">Timestamp</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#424656]/20">
                 {logs.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-6 py-8 text-center text-[#8c90a1] text-sm">No recent activity logs.</td>
+                    <td colSpan={4} className="px-6 py-8 text-center text-brand-text/70 text-sm">No recent activity logs.</td>
                   </tr>
                 ) : (
                   logs.map(log => (
-                    <tr key={log.id} className="hover:bg-[#102034]/30 transition-colors">
-                      <td className="px-6 py-4 text-sm text-brand-white font-medium">{log.service}</td>
+                    <tr key={log.id} className="hover:bg-brand-light-bg/30 transition-colors">
+                      <td className="px-6 py-4 text-sm text-brand-text font-medium">{log.service}</td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border ${log.status === 'SUCCESS' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border-rose-500/20'}`}>
                           {log.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-brand-light-bg">{log.author?.fullName || 'System'}</td>
-                      <td className="px-6 py-4 text-xs text-[#8c90a1] text-right">{new Date(log.createdAt).toLocaleString()}</td>
+                      <td className="px-6 py-4 text-sm text-brand-text/80">{log.author?.fullName || 'System'}</td>
+                      <td className="px-6 py-4 text-xs text-brand-text/70 text-right">{new Date(log.createdAt).toLocaleString()}</td>
                     </tr>
                   ))
                 )}

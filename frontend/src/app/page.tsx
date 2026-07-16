@@ -13,7 +13,7 @@ export default async function Home() {
       <div className="flex-grow w-full flex flex-col items-center justify-center p-6 relative">
         {/* Background decoration */}
         <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-brand-secondary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-brand-primary/10 rounded-full blur-3xl" />
 
         <main className="max-w-3xl w-full text-center space-y-8 relative z-10">
           
@@ -22,7 +22,7 @@ export default async function Home() {
               PnP Academy V1.0
             </div>
             
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-white">
+            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-gray-900 dark:text-brand-white">
               Premium Book Publishing Services <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">
                 For Limited Premium Authors
@@ -36,7 +36,7 @@ export default async function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-16 text-left">
             <div className="p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-brand-secondary rounded-xl flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-brand-primary dark:text-brand-primary rounded-xl flex items-center justify-center mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
               </div>
               <h3 className="font-bold text-lg mb-2">Author CRM</h3>

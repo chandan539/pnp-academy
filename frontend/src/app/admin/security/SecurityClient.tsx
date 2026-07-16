@@ -38,9 +38,9 @@ export default function SecurityClient() {
 
   return (
     <DashboardClient authors={[]} overrideTitle="Security Settings" overrideSubtitle="Manage your account security and password.">
-      <div className="bg-[#0b1c35] rounded-2xl border border-blue-500/10 overflow-hidden max-w-4xl mx-auto">
+      <div className="bg-brand-white rounded-2xl border border-blue-500/10 overflow-hidden max-w-4xl mx-auto">
         <div className="p-6 sm:p-10 border-b border-blue-500/10">
-          <h2 className="text-xl font-semibold text-white">Change Password</h2>
+          <h2 className="text-xl font-semibold text-brand-white">Change Password</h2>
           <p className="text-blue-200/60 mt-1">Update your password to keep your account secure.</p>
         </div>
         
@@ -62,7 +62,7 @@ export default function SecurityClient() {
                   type="password" 
                   value={currentPassword}
                   onChange={e => setCurrentPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-[#0f2442] border border-blue-500/20 rounded-xl text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
+                  className="w-full px-4 py-2.5 bg-brand-light-bg border border-brand-primary/20 rounded-xl text-brand-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
                   placeholder="Enter current password"
                   required
                 />
@@ -74,7 +74,7 @@ export default function SecurityClient() {
                   type="password" 
                   value={newPassword}
                   onChange={e => setNewPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-[#0f2442] border border-blue-500/20 rounded-xl text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
+                  className="w-full px-4 py-2.5 bg-brand-light-bg border border-brand-primary/20 rounded-xl text-brand-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
                   placeholder="Enter new password"
                   required
                 />
@@ -86,7 +86,7 @@ export default function SecurityClient() {
                   type="password" 
                   value={confirmPassword}
                   onChange={e => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-[#0f2442] border border-blue-500/20 rounded-xl text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
+                  className="w-full px-4 py-2.5 bg-brand-light-bg border border-brand-primary/20 rounded-xl text-brand-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
                   placeholder="Confirm new password"
                   required
                 />
@@ -95,7 +95,7 @@ export default function SecurityClient() {
               <button 
                 type="submit"
                 disabled={status.type === 'loading'}
-                className="mt-8 px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
+                className="mt-8 px-6 py-2.5 bg-brand-primary hover:bg-blue-700 text-brand-white font-medium rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
               >
                 {status.type === 'loading' ? 'Updating...' : 'Update Password'}
               </button>

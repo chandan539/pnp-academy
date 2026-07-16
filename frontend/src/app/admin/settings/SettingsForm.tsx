@@ -23,10 +23,10 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
     });
   };
 
-  const inputClasses = "w-full bg-brand-primary-dark border border-[#2a3441] rounded-md px-3 py-2.5 text-sm text-brand-white placeholder-[#4a5568] focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors";
-  const labelClasses = "block text-sm font-medium text-brand-light-bg mb-1.5";
-  const sectionClasses = "bg-[#0b1c30] border border-[#1e293b] rounded-xl overflow-hidden mb-6";
-  const headerClasses = "px-6 py-4 border-b border-[#1e293b] bg-[#0b1c30]/50";
+  const inputClasses = "w-full bg-brand-light-bg border border-brand-primary/20 rounded-md px-3 py-2.5 text-sm text-brand-text placeholder-[#4a5568] focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors";
+  const labelClasses = "block text-sm font-medium text-brand-text/80 mb-1.5";
+  const sectionClasses = "bg-brand-white border border-[#1e293b] rounded-xl overflow-hidden mb-6";
+  const headerClasses = "px-6 py-4 border-b border-[#1e293b] bg-brand-white/50";
   const contentClasses = "p-6 space-y-6";
 
   return (
@@ -46,8 +46,8 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
       {/* General Preferences */}
       <div className={sectionClasses}>
         <div className={headerClasses}>
-          <h3 className="font-semibold text-base text-brand-white">General Preferences</h3>
-          <p className="text-xs text-[#8c90a1] mt-1">Configure global application behavior.</p>
+          <h3 className="font-semibold text-base text-brand-text">General Preferences</h3>
+          <p className="text-xs text-brand-text/70 mt-1">Configure global application behavior.</p>
         </div>
         <div className={contentClasses}>
           <div>
@@ -57,11 +57,11 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
                 <option value="BREVO">Brevo (Transactional API)</option>
                 <option value="SMTP">Gmail SMTP (NodeMailer)</option>
               </select>
-              <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-[#8c90a1]">
+              <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-brand-text/70">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </div>
             </div>
-            <p className="text-xs text-[#8c90a1] mt-2">Select the default service used when sending batch emails to authors.</p>
+            <p className="text-xs text-brand-text/70 mt-2">Select the default service used when sending batch emails to authors.</p>
           </div>
         </div>
       </div>
@@ -69,8 +69,8 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
       {/* Marketing & Analytics */}
       <div className={sectionClasses}>
         <div className={headerClasses}>
-          <h3 className="font-semibold text-base text-brand-white">Marketing & Analytics</h3>
-          <p className="text-xs text-[#8c90a1] mt-1">Manage tracking pixels, analytics IDs, and CRM integrations.</p>
+          <h3 className="font-semibold text-base text-brand-text">Marketing & Analytics</h3>
+          <p className="text-xs text-brand-text/70 mt-1">Manage tracking pixels, analytics IDs, and CRM integrations.</p>
         </div>
         <div className={contentClasses}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -100,8 +100,8 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
         {/* Bulk Email (SMTP) */}
         <div className={sectionClasses.replace('mb-6', 'h-full')}>
           <div className={headerClasses}>
-            <h3 className="font-semibold text-base text-brand-white">Gmail SMTP Configuration</h3>
-            <p className="text-xs text-[#8c90a1] mt-1">Credentials for bulk emailing.</p>
+            <h3 className="font-semibold text-base text-brand-text">Gmail SMTP Configuration</h3>
+            <p className="text-xs text-brand-text/70 mt-1">Credentials for bulk emailing.</p>
           </div>
           <div className={contentClasses}>
             <div>
@@ -122,8 +122,8 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
         {/* Transactional Email */}
         <div className={sectionClasses.replace('mb-6', 'h-full')}>
           <div className={headerClasses}>
-            <h3 className="font-semibold text-base text-brand-white">Brevo API Configuration</h3>
-            <p className="text-xs text-[#8c90a1] mt-1">Credentials for transactional notifications.</p>
+            <h3 className="font-semibold text-base text-brand-text">Brevo API Configuration</h3>
+            <p className="text-xs text-brand-text/70 mt-1">Credentials for transactional notifications.</p>
           </div>
           <div className={contentClasses}>
             <div>
@@ -145,8 +145,8 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
       {/* Webhooks */}
       <div className={sectionClasses}>
         <div className={headerClasses}>
-          <h3 className="font-semibold text-base text-brand-white">Webhooks</h3>
-          <p className="text-xs text-[#8c90a1] mt-1">Send author data to Google Sheets via Apps Script.</p>
+          <h3 className="font-semibold text-base text-brand-text">Webhooks</h3>
+          <p className="text-xs text-brand-text/70 mt-1">Send author data to Google Sheets via Apps Script.</p>
         </div>
         <div className={contentClasses}>
           <div>
@@ -160,11 +160,11 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
         <button 
           type="submit" 
           disabled={isPending}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md shadow-sm transition-colors disabled:opacity-50 flex items-center gap-2 text-sm"
+          className="bg-brand-primary hover:bg-blue-700 text-brand-white font-medium py-2 px-6 rounded-md shadow-sm transition-colors disabled:opacity-50 flex items-center gap-2 text-sm"
         >
           {isPending ? (
             <>
-              <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+              <svg className="animate-spin h-4 w-4 text-brand-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
               Saving...
             </>
           ) : (
