@@ -39,7 +39,7 @@ export default async function ThankYouPage() {
           </div>
           <h1 className="text-4xl font-semibold text-[#d3e4fe] tracking-tighter mb-4">Details Submitted!</h1>
           <p className="text-base text-[#c2c6d8] leading-relaxed max-w-md mx-auto">
-            Thank you for submitting your details. Your payment is confirmed and you are now officially part of the <span className="text-[#b3c5ff] font-medium">PnP Academy</span>. 
+            Thank you for submitting your details. You are now officially part of the <span className="text-[#b3c5ff] font-medium">PnP Academy</span>. 
             We will notify you via email regarding the next steps.
           </p>
         </div>
