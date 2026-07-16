@@ -13,7 +13,7 @@ export async function saveSettings(formData: FormData) {
         });
       }
     }
-    revalidatePath("/admin/settings");
+    revalidatePath("/", "layout");
     return { success: true };
   } catch (error) {
     console.error("Failed to save settings:", error);

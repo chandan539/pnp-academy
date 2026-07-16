@@ -82,7 +82,7 @@ export default function OnboardingClient({ inviteEmail, inviteToken }: { inviteE
           
           {/* Header Section */}
           <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-semibold text-[#d3e4fe] mb-2">Premium Author Onboarding</h2>
+            <h2 className="text-3xl md:text-4xl font-semibold text-[#d3e4fe] mb-2">Author Onboarding</h2>
             <p className="text-sm text-[#c2c6d8] max-w-md mx-auto">
               Welcome! Please complete your profile below to start publishing.
             </p>

@@ -3,7 +3,11 @@ import { ArrowRight, UserPlus, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer";
 
-export default function Home() {
+import { getDynamicPage } from '@/app/actions/pages';
+
+export default async function Home() {
+  const dynamicPage = await getDynamicPage('home');
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col items-center justify-center relative overflow-hidden">
       <div className="flex-grow w-full flex flex-col items-center justify-center p-6 relative">

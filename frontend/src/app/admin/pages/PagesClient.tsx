@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import DashboardClient from "../dashboard/DashboardClient";
 import { Plus, Edit, Trash2 } from "lucide-react";
-import { createPage } from "@/app/actions/pages";
+import { createPage, updatePage, deletePage } from "@/app/actions/pages";
 
 type DynamicPage = {
   id: string;
@@ -20,6 +20,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [editingPage, setEditingPage] = useState<DynamicPage | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,16 +28,52 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
     setError("");
 
     const formData = new FormData(e.currentTarget);
-    const res = await createPage(formData);
-
-    if (res.success && res.page) {
-      setPages([res.page as any, ...pages]);
-      setIsModalOpen(false);
+    
+    if (editingPage) {
+      const res = await updatePage(editingPage.id, formData);
+      if (res.success && res.page) {
+        setPages(pages.map(p => p.id === editingPage.id ? (res.page as any) : p));
+        setIsModalOpen(false);
+        setEditingPage(null);
+      } else {
+        setError(res.error || "Failed to update page");
+      }
     } else {
-      setError(res.error || "Failed to create page");
+      const res = await createPage(formData);
+      if (res.success && res.page) {
+        setPages([res.page as any, ...pages]);
+        setIsModalOpen(false);
+      } else {
+        setError(res.error || "Failed to create page");
+      }
     }
     
     setIsSubmitting(false);
+  };
+
+  const handleEditClick = (page: DynamicPage) => {
+    setEditingPage(page);
+    setError("");
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteClick = async (id: string, slug: string) => {
+    if (['home', 'onboarding', 'thank-you'].includes(slug)) return;
+    
+    if (confirm("Are you sure you want to delete this page?")) {
+      const res = await deletePage(id);
+      if (res.success) {
+        setPages(pages.filter(p => p.id !== id));
+      } else {
+        alert(res.error || "Failed to delete page");
+      }
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setEditingPage(null);
+    setError("");
   };
 
   return (
@@ -48,7 +85,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
             <p className="text-blue-200/60 mt-1">Manage marketing and legal pages</p>
           </div>
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => { setEditingPage(null); setIsModalOpen(true); }}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors shadow-lg shadow-blue-900/20"
           >
             <Plus className="w-4 h-4" />
@@ -100,10 +137,21 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                       </td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex justify-end gap-2">
-                          <button className="p-2 hover:bg-blue-500/10 rounded-lg text-blue-400 transition-colors">
+                          <button 
+                            onClick={() => handleEditClick(page)}
+                            className="p-2 hover:bg-blue-500/10 rounded-lg text-blue-400 transition-colors"
+                          >
                             <Edit className="w-4 h-4" />
                           </button>
-                          <button className="p-2 hover:bg-red-500/10 rounded-lg text-red-400 transition-colors">
+                          <button 
+                            onClick={() => handleDeleteClick(page.id, page.slug)}
+                            className={`p-2 rounded-lg transition-colors ${
+                              ['home', 'onboarding', 'thank-you'].includes(page.slug)
+                              ? 'text-gray-500 cursor-not-allowed opacity-50'
+                              : 'hover:bg-red-500/10 text-red-400'
+                            }`}
+                            disabled={['home', 'onboarding', 'thank-you'].includes(page.slug)}
+                          >
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
@@ -121,9 +169,9 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-[#0b1c35] rounded-2xl border border-blue-500/20 w-full max-w-2xl shadow-2xl overflow-hidden">
             <div className="p-6 border-b border-blue-500/10 flex justify-between items-center">
-              <h2 className="text-xl font-semibold text-white">Create New Page</h2>
+              <h2 className="text-xl font-semibold text-white">{editingPage ? 'Edit Page' : 'Create New Page'}</h2>
               <button 
-                onClick={() => setIsModalOpen(false)}
+                onClick={closeModal}
                 className="text-blue-200/50 hover:text-white transition-colors"
               >
                 ✕
@@ -144,6 +192,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                     name="title"
                     type="text"
                     required
+                    defaultValue={editingPage?.title || ""}
                     className="w-full bg-[#031427] border border-blue-500/20 rounded-lg px-4 py-2 text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
                     placeholder="e.g. Terms of Service"
                   />
@@ -154,7 +203,9 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                     name="slug"
                     type="text"
                     required
-                    className="w-full bg-[#031427] border border-blue-500/20 rounded-lg px-4 py-2 text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
+                    defaultValue={editingPage?.slug || ""}
+                    readOnly={editingPage ? ['home', 'onboarding', 'thank-you'].includes(editingPage.slug) : false}
+                    className={`w-full bg-[#031427] border border-blue-500/20 rounded-lg px-4 py-2 text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all ${editingPage && ['home', 'onboarding', 'thank-you'].includes(editingPage.slug) ? 'opacity-50 cursor-not-allowed' : ''}`}
                     placeholder="e.g. terms-of-service"
                   />
                 </div>
@@ -165,6 +216,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                 <select
                   name="type"
                   required
+                  defaultValue={editingPage?.type || "MARKETING"}
                   className="w-full bg-[#031427] border border-blue-500/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all appearance-none"
                 >
                   <option value="MARKETING">Marketing (Lead Gen)</option>
@@ -178,6 +230,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                   name="content"
                   required
                   rows={8}
+                  defaultValue={editingPage?.content || ""}
                   className="w-full bg-[#031427] border border-blue-500/20 rounded-lg px-4 py-2 text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all font-mono text-sm"
                   placeholder="<h1>Heading</h1><p>Your content here...</p>"
                 ></textarea>
@@ -186,7 +239,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
               <div className="flex justify-end gap-3 pt-4 border-t border-blue-500/10">
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={closeModal}
                   className="px-4 py-2 text-blue-200 hover:text-white transition-colors"
                 >
                   Cancel
@@ -196,7 +249,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                   disabled={isSubmitting}
                   className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition-colors shadow-lg shadow-blue-900/20 disabled:opacity-50"
                 >
-                  {isSubmitting ? 'Creating...' : 'Create Page'}
+                  {isSubmitting ? (editingPage ? 'Updating...' : 'Creating...') : (editingPage ? 'Update Page' : 'Create Page')}
                 </button>
               </div>
             </form>

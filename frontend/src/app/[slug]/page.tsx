@@ -3,8 +3,9 @@ import { notFound } from 'next/navigation';
 import { getDynamicPage } from '@/app/actions/pages';
 import Footer from '@/components/Footer';
 
-export default async function DynamicPageRoute({ params }: { params: { slug: string } }) {
-  const page = await getDynamicPage(params.slug);
+export default async function DynamicPageRoute({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const page = await getDynamicPage(slug);
 
   if (!page) {
     notFound();

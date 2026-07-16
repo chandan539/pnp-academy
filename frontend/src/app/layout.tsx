@@ -36,7 +36,11 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col">
         {children}
         <Suspense fallback={null}>
-          <Analytics gaId={settings.ga_code} fbPixelId={settings.fb_pixel_id} />
+          <Analytics 
+            gaId={settings.ga_code} 
+            fbPixelId={settings.fb_pixel_id} 
+            hubspotCode={settings.hubspot_code} 
+          />
         </Suspense>
       </body>
     </html>

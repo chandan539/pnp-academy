@@ -4,32 +4,28 @@ import React, { useState } from "react";
 import DashboardClient from "../dashboard/DashboardClient";
 import { Search, Filter, CheckCircle, XCircle } from "lucide-react";
 
-type PreInviteApplication = {
+type InviteRecord = {
   id: string;
-  name: string;
   email: string;
-  phone: string;
-  aboutYou: string;
-  linkedinUrl: string;
   status: string;
+  token: string;
   createdAt: Date;
 };
 
-export default function PreInvitesClient({ applications }: { applications: PreInviteApplication[] }) {
+export default function PreInvitesClient({ applications }: { applications: InviteRecord[] }) {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredApps = applications.filter(app => 
-    app.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     app.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <DashboardClient authors={[]} overrideTitle="Pre-Invite Applications" overrideSubtitle="Review requests from authors for premium access">
+    <DashboardClient authors={[]} overrideTitle="Invites" overrideSubtitle="Review sent invites and their status">
       <div className="space-y-6 max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[#0b1c35] p-6 rounded-2xl border border-blue-500/10">
           <div>
-            <h1 className="text-2xl font-semibold text-white tracking-tight">Pre-Invite Applications</h1>
-            <p className="text-blue-200/60 mt-1">Review requests from authors for premium access</p>
+            <h1 className="text-2xl font-semibold text-white tracking-tight">Invited Authors</h1>
+            <p className="text-blue-200/60 mt-1">Review sent invites and their onboarding status</p>
           </div>
           
           <div className="flex w-full md:w-auto gap-3">
@@ -55,11 +51,10 @@ export default function PreInvitesClient({ applications }: { applications: PreIn
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="border-b border-blue-500/10 bg-[#0f2442]">
-                  <th className="px-6 py-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Applicant</th>
-                  <th className="px-6 py-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Contact</th>
-                  <th className="px-6 py-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">About</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Email Address</th>
                   <th className="px-6 py-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-4 text-xs font-semibold text-blue-200 uppercase tracking-wider text-right">Actions</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-blue-200 uppercase tracking-wider">Sent Date</th>
+                  <th className="px-6 py-4 text-xs font-semibold text-blue-200 uppercase tracking-wider text-right">Invite Link</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-blue-500/10">
@@ -73,34 +68,31 @@ export default function PreInvitesClient({ applications }: { applications: PreIn
                   filteredApps.map((app) => (
                     <tr key={app.id} className="hover:bg-[#0f2442]/50 transition-colors">
                       <td className="px-6 py-4">
-                        <div className="font-medium text-white">{app.name}</div>
-                        <div className="text-xs text-blue-300 mt-1">
-                          <a href={app.linkedinUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                            LinkedIn Profile ↗
-                          </a>
-                        </div>
+                        <div className="font-medium text-white">{app.email}</div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm text-blue-200">{app.email}</div>
-                        <div className="text-sm text-blue-200/70">{app.phone}</div>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-blue-200/80 max-w-xs truncate" title={app.aboutYou}>
-                        {app.aboutYou}
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="px-2 py-1 text-xs rounded-full font-medium bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">
+                        <span className={`px-2 py-1 text-xs rounded-full font-medium ${
+                          app.status === 'PENDING' ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20' :
+                          app.status === 'USED' ? 'bg-green-500/10 text-green-400 border border-green-500/20' :
+                          'bg-red-500/10 text-red-400 border border-red-500/20'
+                        }`}>
                           {app.status}
                         </span>
                       </td>
+                      <td className="px-6 py-4 text-sm text-blue-200/80">
+                        {new Date(app.createdAt).toLocaleDateString()}
+                      </td>
                       <td className="px-6 py-4 text-right">
-                        <div className="flex justify-end gap-2">
-                          <button className="p-2 bg-green-500/10 hover:bg-green-500/20 rounded-lg text-green-400 transition-colors tooltip" title="Approve">
-                            <CheckCircle className="w-4 h-4" />
-                          </button>
-                          <button className="p-2 bg-red-500/10 hover:bg-red-500/20 rounded-lg text-red-400 transition-colors tooltip" title="Reject">
-                            <XCircle className="w-4 h-4" />
-                          </button>
-                        </div>
+                        <button 
+                          onClick={() => {
+                            const url = `${window.location.origin}/onboarding/${app.token}`;
+                            navigator.clipboard.writeText(url);
+                            alert('Invite link copied to clipboard!');
+                          }}
+                          className="px-3 py-1.5 text-xs bg-[#0b1c35] border border-blue-500/30 hover:bg-[#0f2442] hover:border-blue-400 text-blue-200 rounded-lg transition-colors"
+                        >
+                          Copy Link
+                        </button>
                       </td>
                     </tr>
                   ))

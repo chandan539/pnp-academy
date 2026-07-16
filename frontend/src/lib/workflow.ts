@@ -42,16 +42,33 @@ export async function generateAuthorPDF(author: any): Promise<string> {
   }
 }
 
+import { sendTransactionalEmail } from '@/app/actions/email';
+
 export async function sendEmails(author: any) {
-  // Stub for Brevo / SMTP Integration
   console.log(`[EMAIL WORKFLOW] Sending Welcome Email to ${author.emailId}`);
-  console.log(`[EMAIL WORKFLOW] Sending Admin Notification`);
   
+  const emailHtml = `
+    <h2>Welcome to PnP Academy, ${author.fullName}!</h2>
+    <p>We have successfully received your details. Your application is now confirmed.</p>
+    <p>Your Author ID is: <strong>${author.authorId}</strong></p>
+    <p>Our team is setting up your author profile and will send you the login credentials within 24 hours.</p>
+    <br/>
+    <p>Best Regards,</p>
+    <p>The PnP Academy Team</p>
+  `;
+
+  const emailResult = await sendTransactionalEmail({
+    to: author.emailId,
+    subject: "Welcome to PnP Academy! Details Confirmed",
+    htmlBody: emailHtml
+  });
+
   await prisma.integrationLog.create({
     data: {
-      service: 'Brevo Email',
-      status: 'SUCCESS',
+      service: 'Welcome Email',
+      status: emailResult.success ? 'SUCCESS' : 'FAILED',
       requestPayload: JSON.stringify({ to: author.emailId, subject: 'Welcome' }),
+      responsePayload: emailResult.error || 'Sent',
       authorId: author.id
     }
   });

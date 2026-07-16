@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import * as gtag from '@/lib/gtag';
 import * as fbq from '@/lib/fpixel';
 
-export default function Analytics({ gaId, fbPixelId }: { gaId?: string; fbPixelId?: string }) {
+export default function Analytics({ gaId, fbPixelId, hubspotCode }: { gaId?: string; fbPixelId?: string; hubspotCode?: string }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -14,11 +14,11 @@ export default function Analytics({ gaId, fbPixelId }: { gaId?: string; fbPixelI
     if (pathname) {
       const isRestricted = pathname.startsWith('/admin') || pathname.startsWith('/api') || pathname === '/login';
       if (!isRestricted) {
-        gtag.pageview(pathname);
+        gtag.pageview(pathname, gaId);
         fbq.pageview();
       }
     }
-  }, [pathname, searchParams]);
+  }, [pathname, searchParams, gaId]);
 
   // Don't inject tracking scripts on restricted pages
   if (pathname && (pathname.startsWith('/admin') || pathname.startsWith('/api') || pathname === '/login')) {
@@ -69,6 +69,16 @@ export default function Analytics({ gaId, fbPixelId }: { gaId?: string; fbPixelI
               fbq('init', '${fbPixelId}');
             `,
           }}
+        />
+      )}
+      {/* HubSpot */}
+      {hubspotCode && (
+        <Script
+          strategy="afterInteractive"
+          src={`//js.hs-scripts.com/${hubspotCode}.js`}
+          id="hs-script-loader"
+          async
+          defer
         />
       )}
     </>

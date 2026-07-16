@@ -9,6 +9,7 @@ import {
   LogOut, ShieldCheck, Mail, BookOpen, UserPlus
 } from "lucide-react";
 import { createAndSendInvite } from '@/app/actions/invites';
+import { getCurrentUser } from '@/app/actions/profile';
 
 const navItems = [
   { icon: LayoutDashboard, label: "Overview", href: "/admin/dashboard" },
@@ -45,6 +46,14 @@ export default function DashboardClient({
   const [inviteMessage, setInviteMessage] = useState('');
   const [inviteError, setInviteError] = useState('');
   const [inviteUrl, setInviteUrl] = useState('');
+  
+  const [currentUser, setCurrentUser] = useState<{name?: string|null, email?: string|null, role?: string|null} | null>(null);
+
+  useEffect(() => {
+    getCurrentUser().then(user => {
+      if (user) setCurrentUser(user);
+    });
+  }, []);
   
   const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -109,31 +118,28 @@ export default function DashboardClient({
         </div>
         
         <nav className="flex-1 mt-6 px-4 space-y-2 overflow-y-auto custom-scrollbar">
-          <Link href="/admin/dashboard" className={`flex items-center gap-4 py-3 rounded-lg text-[#b3c5ff] font-bold bg-[#1b2b3f] transition-colors group ${isSidebarCollapsed ? 'justify-center px-0 border-l-2 border-[#b3c5ff]' : 'px-4 border-r-2 border-[#b3c5ff]'}`} title="Dashboard">
-            <svg className="flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
-            {!isSidebarCollapsed && <span className="text-sm font-medium">Dashboard</span>}
-          </Link>
-          <Link href="/admin/authors" className={`flex items-center gap-4 py-3 rounded-lg text-[#c2c6d8] hover:bg-[#1b2b3f] transition-colors group ${isSidebarCollapsed ? 'justify-center px-0' : 'px-4'}`} title="Authors">
-            <svg className="flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            {!isSidebarCollapsed && <span className="text-sm font-medium">Authors</span>}
-          </Link>
-          
-          <div className={`pt-6 pb-2 font-bold text-[#8c90a1] uppercase tracking-wider ${isSidebarCollapsed ? 'text-center text-[8px]' : 'px-4 text-[10px]'}`}>
-            System
-          </div>
-          
-          <Link href="/admin/bulk-email" className={`flex items-center gap-4 py-3 rounded-lg text-[#c2c6d8] hover:bg-[#1b2b3f] transition-colors group ${isSidebarCollapsed ? 'justify-center px-0' : 'px-4'}`} title="Bulk Email">
-            <svg className="flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            {!isSidebarCollapsed && <span className="text-sm font-medium">Bulk Email</span>}
-          </Link>
-          <Link href="/admin/settings" className={`flex items-center gap-4 py-3 rounded-lg text-[#c2c6d8] hover:bg-[#1b2b3f] transition-colors group ${isSidebarCollapsed ? 'justify-center px-0' : 'px-4'}`} title="Settings">
-            <svg className="flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            {!isSidebarCollapsed && <span className="text-sm font-medium">Settings</span>}
-          </Link>
-          <Link href="/admin/help" className={`flex items-center gap-4 py-3 rounded-lg text-[#c2c6d8] hover:bg-[#1b2b3f] transition-colors group ${isSidebarCollapsed ? 'justify-center px-0' : 'px-4'}`} title="Help">
-            <svg className="flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-            {!isSidebarCollapsed && <span className="text-sm font-medium">Help & Resources</span>}
-          </Link>
+          {navItems.map((item, index) => {
+            const Icon = item.icon;
+            if (item.label === "Bulk Email") {
+              return (
+                <React.Fragment key={item.label}>
+                  <div className={`pt-6 pb-2 font-bold text-[#8c90a1] uppercase tracking-wider ${isSidebarCollapsed ? 'text-center text-[8px]' : 'px-4 text-[10px]'}`}>
+                    System
+                  </div>
+                  <Link href={item.href} className={`flex items-center gap-4 py-3 rounded-lg text-[#c2c6d8] hover:bg-[#1b2b3f] transition-colors group ${isSidebarCollapsed ? 'justify-center px-0' : 'px-4'}`} title={item.label}>
+                    <Icon className="flex-shrink-0" width={20} height={20} />
+                    {!isSidebarCollapsed && <span className="text-sm font-medium">{item.label}</span>}
+                  </Link>
+                </React.Fragment>
+              );
+            }
+            return (
+              <Link key={item.label} href={item.href} className={`flex items-center gap-4 py-3 rounded-lg text-[#c2c6d8] hover:bg-[#1b2b3f] transition-colors group ${isSidebarCollapsed ? 'justify-center px-0' : 'px-4'}`} title={item.label}>
+                <Icon className="flex-shrink-0" width={20} height={20} />
+                {!isSidebarCollapsed && <span className="text-sm font-medium">{item.label}</span>}
+              </Link>
+            );
+          })}
         </nav>
         
         <div className="p-4 border-t border-[#424656]/30 space-y-4 mt-auto">
@@ -179,14 +185,14 @@ export default function DashboardClient({
             <div className="relative">
               <button 
                 onClick={() => setProfileOpen(!profileOpen)}
-                className="flex items-center gap-3 p-1 pr-3 rounded-full hover:bg-[#102034] border border-transparent hover:border-[#424656]/50 transition-all focus:outline-none"
+                className="flex items-center gap-2 lg:gap-3 p-1.5 lg:p-2 bg-[#0b1c35] hover:bg-[#0f2442] border border-blue-500/20 rounded-full lg:rounded-xl transition-all"
               >
-                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white text-xs font-bold shadow-md shadow-blue-900/20">
-                  AR
+                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white font-medium text-sm shadow-inner">
+                  {currentUser?.name ? currentUser.name.substring(0, 2).toUpperCase() : 'AD'}
                 </div>
-                <div className="text-left hidden sm:block">
-                  <p className="text-xs text-[#d3e4fe] font-bold leading-none">Alex Rivera</p>
-                  <p className="text-[10px] text-[#8c90a1] mt-1">Administrator</p>
+                <div className="hidden lg:block text-left mr-2">
+                  <p className="text-sm font-medium text-white leading-tight">{currentUser?.name || 'Administrator'}</p>
+                  <p className="text-xs text-blue-200/50 mt-0.5">{currentUser?.role?.replace('_', ' ') || 'Admin'}</p>
                 </div>
                 <svg className={`w-4 h-4 text-[#8c90a1] transition-transform ${profileOpen ? 'rotate-180' : ''}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </button>
@@ -195,8 +201,8 @@ export default function DashboardClient({
               {profileOpen && (
                 <div className="absolute right-0 mt-3 w-56 glass-panel border border-[#424656]/50 rounded-xl shadow-2xl py-2 z-50 transform origin-top-right transition-all">
                   <div className="px-4 py-3 border-b border-[#424656]/30 mb-2">
-                    <p className="text-sm font-bold text-[#d3e4fe]">Alex Rivera</p>
-                    <p className="text-xs text-[#8c90a1] truncate">alex.rivera@pnpacademy.com</p>
+                    <p className="text-sm font-bold text-[#d3e4fe]">{currentUser?.name || 'Administrator'}</p>
+                    <p className="text-xs text-[#8c90a1] truncate">{currentUser?.email || 'admin@example.com'}</p>
                   </div>
                   
                   <Link href="/admin/settings" className="flex items-center gap-3 px-4 py-2 text-sm text-[#c2c6d8] hover:bg-[#102034] hover:text-[#b3c5ff] transition-colors">
