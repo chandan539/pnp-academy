@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { submitApplication } from '@/app/actions/onboarding';
 
-export default function OnboardingClient({ inviteEmail, inviteToken }: { inviteEmail: string, inviteToken: string }) {
+export default function OnboardingClient({ inviteEmail, inviteToken, websiteTitle = "Premium Author Program" }: { inviteEmail: string, inviteToken: string, websiteTitle?: string }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -67,9 +67,11 @@ export default function OnboardingClient({ inviteEmail, inviteToken }: { inviteE
     <div className="min-h-screen bg-brand-light-bg text-brand-white selection:bg-brand-primary/30 font-sans">
       <style dangerouslySetInnerHTML={{ __html: `
         .glass-panel {
-            background: rgba(16, 32, 52, 0.8);
+            background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(66, 70, 86, 0.4);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
         }
         .input-glow:focus {
             box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.4);
@@ -82,9 +84,12 @@ export default function OnboardingClient({ inviteEmail, inviteToken }: { inviteE
           
           {/* Header Section */}
           <div className="text-center mb-10">
+            <div className="flex justify-center mb-6">
+              <img src="/api/branding/logo" alt={`${websiteTitle} Logo`} className="h-24 w-auto" />
+            </div>
             <h2 className="text-3xl md:text-4xl font-semibold text-brand-text mb-2">Author Onboarding</h2>
             <p className="text-sm text-brand-text/80 max-w-md mx-auto">
-              Welcome! Please complete your profile below to start publishing.
+              Welcome! Please complete your profile below to start publishing for {websiteTitle}.
             </p>
           </div>
 
@@ -203,8 +208,8 @@ export default function OnboardingClient({ inviteEmail, inviteToken }: { inviteE
                   <button 
                     type="submit" 
                     disabled={isLoading || isSuccess}
-                    className={`w-full md:w-auto px-10 py-3 rounded-xl text-xs font-medium text-brand-text transition-all flex items-center justify-center gap-2 ${
-                      isSuccess ? 'bg-green-600' : 'bg-brand-primary hover:bg-blue-700'
+                    className={`w-full md:w-auto px-10 py-3 rounded-xl text-xs font-medium text-brand-white transition-all flex items-center justify-center gap-2 ${
+                      isSuccess ? 'bg-green-600' : 'bg-brand-primary hover:bg-brand-primary-dark'
                     }`}
                   >
                     {isLoading ? 'Processing...' : isSuccess ? 'Success' : 'Submit Application'}

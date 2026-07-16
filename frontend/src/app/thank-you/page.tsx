@@ -1,8 +1,11 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { getSettings } from '@/app/actions/settings';
 
 export default async function ThankYouPage() {
+  const settings = await getSettings();
+  const websiteTitle = settings.website_title || "PnP Academy";
   return (
     <div className="min-h-screen bg-brand-light-bg text-brand-text flex flex-col items-center justify-center p-4 selection:bg-brand-primary/30 overflow-hidden relative font-sans">
       <style dangerouslySetInnerHTML={{ __html: `
@@ -34,12 +37,12 @@ export default async function ThankYouPage() {
       <main className="relative z-10 w-full max-w-lg text-center">
         {/* Brand Identity */}
         <div className="flex flex-col items-center mb-8">
-          <div className="flex items-center justify-center mb-6">
-            <img src="/api/branding/logo" alt="P&P Academy Logo" className="h-24 w-auto" />
-          </div>
+          <Link href="/" className="flex items-center justify-center mb-6 transition-transform hover:scale-105">
+            <img src="/api/branding/logo" alt={`${websiteTitle} Logo`} className="h-24 w-auto" />
+          </Link>
           <h1 className="text-4xl font-semibold text-brand-text tracking-tighter mb-4">Details Submitted!</h1>
           <p className="text-base text-brand-text/80 leading-relaxed max-w-md mx-auto">
-            Thank you for submitting your details. You are now officially part of the <span className="text-brand-primary font-medium">PnP Academy</span>. 
+            Thank you for submitting your details. You are now officially part of <span className="text-brand-primary font-medium">{websiteTitle}</span>. 
             We will notify you via email regarding the next steps.
           </p>
         </div>

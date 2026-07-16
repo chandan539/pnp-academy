@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { submitPreInvite } from '@/app/actions/pre-invites';
 
-export default function PreInviteForm() {
+export default function PreInviteForm({ websiteTitle = "Premium Author Program" }: { websiteTitle?: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -27,8 +27,11 @@ export default function PreInviteForm() {
   return (
     <div className="flex-grow flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Premium Author Program
+        <div className="flex justify-center mb-6">
+          <img src="/api/branding/logo" alt={`${websiteTitle} Logo`} className="h-20 w-auto" />
+        </div>
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-brand-text">
+          {websiteTitle}
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600 max-w">
           This platform is strictly for pre-invited authors. If you'd like to be considered for an invitation, please fill out the quick application below.
@@ -36,7 +39,7 @@ export default function PreInviteForm() {
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10 border border-gray-100">
+        <div className="bg-brand-white py-8 px-4 shadow-xl sm:rounded-xl sm:px-10 border border-brand-primary/10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             
             {error && (
