@@ -21,45 +21,45 @@ export default function BulkEmailClient() {
   }
 
   return (
-    <div className="bg-[#0b1c30] border border-[#424656]/50 rounded-xl p-8 max-w-4xl">
+    <div className="bg-[#0b1c30] border border-brand-primary/50 rounded-xl p-8 max-w-4xl">
       <div className="mb-8">
-        <h3 className="text-2xl font-bold text-[#d3e4fe]">Bulk Email Campaigns</h3>
+        <h3 className="text-2xl font-bold text-brand-white">Bulk Email Campaigns</h3>
         <p className="text-[#8c90a1] text-sm mt-1">
           Send a broadcast email to all registered authors. Uses your Preferred Provider from Settings.
         </p>
       </div>
 
       {message && (
-        <div className={`p-4 rounded-lg mb-6 text-sm font-medium ${message.type === 'success' ? 'bg-[#b3c5ff]/10 text-[#b3c5ff] border border-[#b3c5ff]/20' : 'bg-[#ffb4ab]/10 text-[#ffb4ab] border border-[#ffb4ab]/20'}`}>
+        <div className={`p-4 rounded-lg mb-6 text-sm font-medium ${message.type === 'success' ? 'bg-[#b3c5ff]/10 text-brand-secondary border border-[#b3c5ff]/20' : 'bg-[#ffb4ab]/10 text-[#ffb4ab] border border-[#ffb4ab]/20'}`}>
           {message.text}
         </div>
       )}
 
       <form id="bulk-email-form" action={handleSend} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-[#c2c6d8] mb-2">Subject Line</label>
+          <label className="block text-sm font-medium text-brand-light-bg mb-2">Subject Line</label>
           <input 
             type="text" 
             name="subject" 
             required
             placeholder="e.g., Important Update for Authors"
-            className="w-full bg-[#1b2b3f] border border-[#424656]/50 rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-blue-400 focus:border-blue-400 outline-none"
+            className="w-full bg-brand-primary border border-brand-primary/50 rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-blue-400 focus:border-blue-400 outline-none"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-[#c2c6d8] mb-2">Email Body (HTML supported)</label>
+          <label className="block text-sm font-medium text-brand-light-bg mb-2">Email Body (HTML supported)</label>
           <textarea 
             name="body" 
             required
             rows={12}
             placeholder="<p>Hello authors...</p>"
-            className="w-full bg-[#1b2b3f] border border-[#424656]/50 rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-blue-400 focus:border-blue-400 outline-none custom-scrollbar"
+            className="w-full bg-brand-primary border border-brand-primary/50 rounded-lg px-4 py-3 text-sm focus:ring-1 focus:ring-blue-400 focus:border-blue-400 outline-none custom-scrollbar"
           />
           <p className="text-xs text-[#8c90a1] mt-2">You can use standard HTML tags like &lt;b&gt;, &lt;a&gt;, &lt;p&gt;, etc.</p>
         </div>
 
-        <div className="pt-4 border-t border-[#424656]/30 flex justify-end">
+        <div className="pt-4 border-t border-brand-primary/30 flex justify-end">
           <button 
             type="submit" 
             disabled={isPending}

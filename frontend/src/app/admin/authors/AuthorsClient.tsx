@@ -109,26 +109,26 @@ export default function AuthorsClient({ initialAuthors }: { initialAuthors: any[
       overrideSubtitle="Manage all registered authors, import legacy data, and perform administrative actions."
     >
       <div className="glass-panel p-6 rounded-xl w-full mb-6">
-        <h3 className="text-sm font-bold text-[#b3c5ff] mb-4 uppercase tracking-wider">Filters</h3>
+        <h3 className="text-sm font-bold text-brand-secondary mb-4 uppercase tracking-wider">Filters</h3>
         <div className="flex flex-wrap gap-4">
           <input 
             type="text" 
             placeholder="Filter by City" 
             value={filterCity}
             onChange={(e) => setFilterCity(e.target.value)}
-            className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-lg p-2 text-sm focus:outline-none focus:border-blue-500" 
+            className="bg-[#102034] border border-brand-primary text-brand-white rounded-lg p-2 text-sm focus:outline-none focus:border-blue-500" 
           />
           <input 
             type="text" 
             placeholder="Filter by State" 
             value={filterState}
             onChange={(e) => setFilterState(e.target.value)}
-            className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-lg p-2 text-sm focus:outline-none focus:border-blue-500" 
+            className="bg-[#102034] border border-brand-primary text-brand-white rounded-lg p-2 text-sm focus:outline-none focus:border-blue-500" 
           />
           <select 
             value={filterDateRange}
             onChange={(e) => setFilterDateRange(e.target.value)}
-            className="bg-[#102034] border border-[#424656] text-[#d3e4fe] rounded-lg p-2 text-sm focus:outline-none focus:border-blue-500"
+            className="bg-[#102034] border border-brand-primary text-brand-white rounded-lg p-2 text-sm focus:outline-none focus:border-blue-500"
           >
             <option value="ALL">All Time</option>
             <option value="THIS_WEEK">This Week</option>
@@ -139,7 +139,7 @@ export default function AuthorsClient({ initialAuthors }: { initialAuthors: any[
 
       <div className="glass-panel p-6 rounded-xl w-full">
         <div className="flex justify-between items-center mb-6">
-          <h3 className="text-xl font-bold text-[#d3e4fe]">Authors ({filteredAuthors.length})</h3>
+          <h3 className="text-xl font-bold text-brand-white">Authors ({filteredAuthors.length})</h3>
           
           <div>
             <input 
@@ -152,7 +152,7 @@ export default function AuthorsClient({ initialAuthors }: { initialAuthors: any[
             <button 
               onClick={() => fileInputRef.current?.click()}
               disabled={isImporting}
-              className="px-4 py-2 bg-[#102034] text-[#b3c5ff] border border-[#424656] rounded-lg text-sm font-medium hover:bg-[#1b2b3f] transition-colors disabled:opacity-50"
+              className="px-4 py-2 bg-[#102034] text-brand-secondary border border-brand-primary rounded-lg text-sm font-medium hover:bg-brand-primary transition-colors disabled:opacity-50"
             >
               {isImporting ? "Importing..." : "Import CSV"}
             </button>
@@ -178,17 +178,17 @@ export default function AuthorsClient({ initialAuthors }: { initialAuthors: any[
               ) : filteredAuthors.map((author) => (
                 <tr key={author.id} className="hover:bg-[#102034]/30 transition-colors">
                   <td className="px-6 py-4">
-                    <p className="text-sm text-[#d3e4fe] font-medium">{author.fullName}</p>
+                    <p className="text-sm text-brand-white font-medium">{author.fullName}</p>
                     <p className="text-[11px] text-[#8c90a1]">{author.bookTitle || 'No book title'}</p>
                   </td>
                   <td className="px-6 py-4">
-                    <p className="text-xs text-[#c2c6d8]">{author.emailId}</p>
+                    <p className="text-xs text-brand-light-bg">{author.emailId}</p>
                     <p className="text-[11px] text-[#8c90a1]">{author.mobileNumber}</p>
                   </td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border ${
                       author.status === 'SUBMITTED' ? 'bg-[#ffb59d]/10 text-[#ffb59d] border-[#ffb59d]/20' : 
-                      'bg-[#b3c5ff]/10 text-[#b3c5ff] border-[#b3c5ff]/20'
+                      'bg-[#b3c5ff]/10 text-brand-secondary border-[#b3c5ff]/20'
                     }`}>
                       {author.status}
                     </span>
@@ -199,7 +199,7 @@ export default function AuthorsClient({ initialAuthors }: { initialAuthors: any[
                   <td className="px-6 py-4 text-right flex items-center justify-end gap-2">
                     <Link 
                       href={`/admin/authors/${author.id}`}
-                      className="text-[#b3c5ff] hover:text-white text-xs font-medium transition-colors p-2"
+                      className="text-brand-secondary hover:text-white text-xs font-medium transition-colors p-2"
                     >
                       View
                     </Link>
@@ -223,7 +223,7 @@ export default function AuthorsClient({ initialAuthors }: { initialAuthors: any[
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
           <div className="bg-[#0b1c30] border border-red-500/30 rounded-xl p-8 max-w-md w-full shadow-2xl shadow-red-900/20">
             <h3 className="text-xl font-bold text-red-400 mb-4">CRITICAL WARNING</h3>
-            <p className="text-sm text-[#c2c6d8] mb-6 leading-relaxed">
+            <p className="text-sm text-brand-light-bg mb-6 leading-relaxed">
               You are about to permanently delete this author's entire record. 
               This action <strong>cannot be undone</strong> and will cascade delete all associated activity logs, integration logs, and tasks.
             </p>
@@ -232,7 +232,7 @@ export default function AuthorsClient({ initialAuthors }: { initialAuthors: any[
               <button 
                 onClick={closeDeleteModal}
                 disabled={isDeleting}
-                className="px-4 py-2 rounded-lg text-sm font-medium text-[#c2c6d8] hover:bg-[#1b2b3f] transition-colors"
+                className="px-4 py-2 rounded-lg text-sm font-medium text-brand-light-bg hover:bg-brand-primary transition-colors"
               >
                 Cancel
               </button>

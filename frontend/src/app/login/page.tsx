@@ -40,7 +40,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#031427] text-[#d3e4fe] flex items-center justify-center p-4 selection:bg-blue-500/30 overflow-hidden relative">
+    <div className="min-h-screen bg-brand-primary-dark text-brand-white flex items-center justify-center p-4 selection:bg-brand-secondary/30 overflow-hidden relative">
       <style dangerouslySetInnerHTML={{ __html: `
         .glass-card {
             background: rgba(15, 23, 42, 0.6);
@@ -101,23 +101,23 @@ export default function LoginPage() {
           <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-blue-600/20">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
           </div>
-          <h1 className="text-3xl font-semibold text-[#d3e4fe] tracking-tighter">PnP Academy</h1>
-          <p className="text-sm text-[#c2c6d8] mt-2">Premium SaaS for Modern Authors</p>
+          <h1 className="text-3xl font-semibold text-brand-white tracking-tighter">PnP Academy</h1>
+          <p className="text-sm text-brand-light-bg mt-2">Premium SaaS for Modern Authors</p>
         </div>
         
         {/* Login Card */}
         <div className="glass-card rounded-xl p-10 shimmer">
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-xs font-medium text-[#c2c6d8] mb-2 ml-1 uppercase tracking-widest" htmlFor="email">Email Address</label>
-              <input className="w-full bg-[#1b2b3f]/50 border border-[#424656]/30 rounded-lg px-6 py-4 text-sm text-[#d3e4fe] placeholder:text-[#8c90a1] focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow relative z-20" id="email" name="email" placeholder="name@company.com" required type="email" />
+              <label className="block text-xs font-medium text-brand-light-bg mb-2 ml-1 uppercase tracking-widest" htmlFor="email">Email Address</label>
+              <input className="w-full bg-brand-primary/50 border border-brand-primary/30 rounded-lg px-6 py-4 text-sm text-brand-white placeholder:text-[#8c90a1] focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow relative z-20" id="email" name="email" placeholder="name@company.com" required type="email" />
             </div>
             <div>
               <div className="flex justify-between items-center mb-2 ml-1">
-                <label className="block text-xs font-medium text-[#c2c6d8] uppercase tracking-widest" htmlFor="password">Password</label>
-                <Link className="text-xs font-medium text-[#b3c5ff] hover:text-blue-500 transition-colors relative z-20" href="#">Forgot password?</Link>
+                <label className="block text-xs font-medium text-brand-light-bg uppercase tracking-widest" htmlFor="password">Password</label>
+                <Link className="text-xs font-medium text-brand-secondary hover:text-blue-500 transition-colors relative z-20" href="#">Forgot password?</Link>
               </div>
-              <input className="w-full bg-[#1b2b3f]/50 border border-[#424656]/30 rounded-lg px-6 py-4 text-sm text-[#d3e4fe] placeholder:text-[#8c90a1] focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow relative z-20" id="password" name="password" placeholder="••••••••" required type="password" />
+              <input className="w-full bg-brand-primary/50 border border-brand-primary/30 rounded-lg px-6 py-4 text-sm text-brand-white placeholder:text-[#8c90a1] focus:outline-none focus:ring-1 focus:ring-blue-400 focus:border-blue-400 transition-all input-glow relative z-20" id="password" name="password" placeholder="••••••••" required type="password" />
             </div>
             
             {error && (
@@ -147,9 +147,9 @@ export default function LoginPage() {
         <footer className="mt-10 text-center">
 
           <div className="flex items-center justify-center gap-6 mt-10 opacity-40">
-            <Link className="text-xs font-medium text-[#c2c6d8] hover:text-[#d3e4fe]" href="#">Privacy</Link>
-            <Link className="text-xs font-medium text-[#c2c6d8] hover:text-[#d3e4fe]" href="#">Terms</Link>
-            <Link className="text-xs font-medium text-[#c2c6d8] hover:text-[#d3e4fe]" href="#">Contact</Link>
+            <Link className="text-xs font-medium text-brand-light-bg hover:text-brand-white" href="#">Privacy</Link>
+            <Link className="text-xs font-medium text-brand-light-bg hover:text-brand-white" href="#">Terms</Link>
+            <Link className="text-xs font-medium text-brand-light-bg hover:text-brand-white" href="#">Contact</Link>
           </div>
         </footer>
       </main>

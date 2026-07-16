@@ -86,7 +86,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
           </div>
           <button
             onClick={() => { setEditingPage(null); setIsModalOpen(true); }}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-colors shadow-lg shadow-blue-900/20"
+            className="flex items-center gap-2 bg-blue-600 hover:bg-brand-secondary text-white px-4 py-2 rounded-lg transition-colors shadow-lg shadow-blue-900/20"
           >
             <Plus className="w-4 h-4" />
             <span>Create Page</span>
@@ -128,7 +128,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                         </span>
                       </td>
                       <td className="px-6 py-4">
-                        <span className="px-2 py-1 text-xs rounded-full font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                        <span className="px-2 py-1 text-xs rounded-full font-medium bg-brand-secondary/10 text-brand-secondary border border-blue-500/20">
                           {page.status}
                         </span>
                       </td>
@@ -139,7 +139,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                         <div className="flex justify-end gap-2">
                           <button 
                             onClick={() => handleEditClick(page)}
-                            className="p-2 hover:bg-blue-500/10 rounded-lg text-blue-400 transition-colors"
+                            className="p-2 hover:bg-brand-secondary/10 rounded-lg text-brand-secondary transition-colors"
                           >
                             <Edit className="w-4 h-4" />
                           </button>
@@ -193,7 +193,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                     type="text"
                     required
                     defaultValue={editingPage?.title || ""}
-                    className="w-full bg-[#031427] border border-blue-500/20 rounded-lg px-4 py-2 text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
+                    className="w-full bg-brand-primary-dark border border-blue-500/20 rounded-lg px-4 py-2 text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all"
                     placeholder="e.g. Terms of Service"
                   />
                 </div>
@@ -205,7 +205,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                     required
                     defaultValue={editingPage?.slug || ""}
                     readOnly={editingPage ? ['home', 'onboarding', 'thank-you'].includes(editingPage.slug) : false}
-                    className={`w-full bg-[#031427] border border-blue-500/20 rounded-lg px-4 py-2 text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all ${editingPage && ['home', 'onboarding', 'thank-you'].includes(editingPage.slug) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    className={`w-full bg-brand-primary-dark border border-blue-500/20 rounded-lg px-4 py-2 text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all ${editingPage && ['home', 'onboarding', 'thank-you'].includes(editingPage.slug) ? 'opacity-50 cursor-not-allowed' : ''}`}
                     placeholder="e.g. terms-of-service"
                   />
                 </div>
@@ -217,7 +217,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                   name="type"
                   required
                   defaultValue={editingPage?.type || "MARKETING"}
-                  className="w-full bg-[#031427] border border-blue-500/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all appearance-none"
+                  className="w-full bg-brand-primary-dark border border-blue-500/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all appearance-none"
                 >
                   <option value="MARKETING">Marketing (Lead Gen)</option>
                   <option value="LEGAL">Legal (Footer Link)</option>
@@ -231,7 +231,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                   required
                   rows={8}
                   defaultValue={editingPage?.content || ""}
-                  className="w-full bg-[#031427] border border-blue-500/20 rounded-lg px-4 py-2 text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all font-mono text-sm"
+                  className="w-full bg-brand-primary-dark border border-blue-500/20 rounded-lg px-4 py-2 text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all font-mono text-sm"
                   placeholder="<h1>Heading</h1><p>Your content here...</p>"
                 ></textarea>
               </div>
@@ -247,7 +247,7 @@ export default function PagesClient({ initialPages }: { initialPages: DynamicPag
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg transition-colors shadow-lg shadow-blue-900/20 disabled:opacity-50"
+                  className="bg-blue-600 hover:bg-brand-secondary text-white px-6 py-2 rounded-lg transition-colors shadow-lg shadow-blue-900/20 disabled:opacity-50"
                 >
                   {isSubmitting ? (editingPage ? 'Updating...' : 'Creating...') : (editingPage ? 'Update Page' : 'Create Page')}
                 </button>

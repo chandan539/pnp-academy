@@ -36,10 +36,10 @@ export default function PreInvitesClient({ applications }: { applications: Invit
                 placeholder="Search name or email..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-[#031427] border border-blue-500/20 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 transition-colors"
+                className="w-full bg-brand-primary-dark border border-blue-500/20 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-blue-200/30 focus:outline-none focus:border-blue-500/50 transition-colors"
               />
             </div>
-            <button className="flex items-center justify-center gap-2 bg-[#031427] border border-blue-500/20 text-blue-200 px-4 py-2 rounded-lg hover:bg-[#0f2442] transition-colors">
+            <button className="flex items-center justify-center gap-2 bg-brand-primary-dark border border-blue-500/20 text-blue-200 px-4 py-2 rounded-lg hover:bg-[#0f2442] transition-colors">
               <Filter className="w-4 h-4" />
               <span className="text-sm font-medium">Filter</span>
             </button>

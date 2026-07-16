@@ -23,8 +23,8 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
     });
   };
 
-  const inputClasses = "w-full bg-[#031427] border border-[#2a3441] rounded-md px-3 py-2.5 text-sm text-[#d3e4fe] placeholder-[#4a5568] focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors";
-  const labelClasses = "block text-sm font-medium text-[#c2c6d8] mb-1.5";
+  const inputClasses = "w-full bg-brand-primary-dark border border-[#2a3441] rounded-md px-3 py-2.5 text-sm text-brand-white placeholder-[#4a5568] focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors";
+  const labelClasses = "block text-sm font-medium text-brand-light-bg mb-1.5";
   const sectionClasses = "bg-[#0b1c30] border border-[#1e293b] rounded-xl overflow-hidden mb-6";
   const headerClasses = "px-6 py-4 border-b border-[#1e293b] bg-[#0b1c30]/50";
   const contentClasses = "p-6 space-y-6";
@@ -46,7 +46,7 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
       {/* General Preferences */}
       <div className={sectionClasses}>
         <div className={headerClasses}>
-          <h3 className="font-semibold text-base text-[#d3e4fe]">General Preferences</h3>
+          <h3 className="font-semibold text-base text-brand-white">General Preferences</h3>
           <p className="text-xs text-[#8c90a1] mt-1">Configure global application behavior.</p>
         </div>
         <div className={contentClasses}>
@@ -69,7 +69,7 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
       {/* Marketing & Analytics */}
       <div className={sectionClasses}>
         <div className={headerClasses}>
-          <h3 className="font-semibold text-base text-[#d3e4fe]">Marketing & Analytics</h3>
+          <h3 className="font-semibold text-base text-brand-white">Marketing & Analytics</h3>
           <p className="text-xs text-[#8c90a1] mt-1">Manage tracking pixels, analytics IDs, and CRM integrations.</p>
         </div>
         <div className={contentClasses}>
@@ -100,7 +100,7 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
         {/* Bulk Email (SMTP) */}
         <div className={sectionClasses.replace('mb-6', 'h-full')}>
           <div className={headerClasses}>
-            <h3 className="font-semibold text-base text-[#d3e4fe]">Gmail SMTP Configuration</h3>
+            <h3 className="font-semibold text-base text-brand-white">Gmail SMTP Configuration</h3>
             <p className="text-xs text-[#8c90a1] mt-1">Credentials for bulk emailing.</p>
           </div>
           <div className={contentClasses}>
@@ -122,7 +122,7 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
         {/* Transactional Email */}
         <div className={sectionClasses.replace('mb-6', 'h-full')}>
           <div className={headerClasses}>
-            <h3 className="font-semibold text-base text-[#d3e4fe]">Brevo API Configuration</h3>
+            <h3 className="font-semibold text-base text-brand-white">Brevo API Configuration</h3>
             <p className="text-xs text-[#8c90a1] mt-1">Credentials for transactional notifications.</p>
           </div>
           <div className={contentClasses}>
@@ -145,7 +145,7 @@ export default function SettingsForm({ initialData }: { initialData: Record<stri
       {/* Webhooks */}
       <div className={sectionClasses}>
         <div className={headerClasses}>
-          <h3 className="font-semibold text-base text-[#d3e4fe]">Webhooks</h3>
+          <h3 className="font-semibold text-base text-brand-white">Webhooks</h3>
           <p className="text-xs text-[#8c90a1] mt-1">Send author data to Google Sheets via Apps Script.</p>
         </div>
         <div className={contentClasses}>

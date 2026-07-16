@@ -27,7 +27,7 @@ export default async function SettingsPage() {
         <SettingsForm initialData={initialSettings} />
 
         <div className="bg-[#0b1c30] border border-[#1e293b] rounded-xl overflow-hidden">
-          <h3 className="text-base font-semibold text-[#d3e4fe] px-6 py-4 border-b border-[#1e293b] bg-[#0b1c30]/50">Recent System Logs</h3>
+          <h3 className="text-base font-semibold text-brand-white px-6 py-4 border-b border-[#1e293b] bg-[#0b1c30]/50">Recent System Logs</h3>
           <div className="overflow-x-auto p-6">
             <table className="w-full text-left border-collapse">
               <thead>
@@ -46,13 +46,13 @@ export default async function SettingsPage() {
                 ) : (
                   logs.map(log => (
                     <tr key={log.id} className="hover:bg-[#102034]/30 transition-colors">
-                      <td className="px-6 py-4 text-sm text-[#d3e4fe] font-medium">{log.service}</td>
+                      <td className="px-6 py-4 text-sm text-brand-white font-medium">{log.service}</td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border ${log.status === 'SUCCESS' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border-rose-500/20'}`}>
                           {log.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm text-[#c2c6d8]">{log.author?.fullName || 'System'}</td>
+                      <td className="px-6 py-4 text-sm text-brand-light-bg">{log.author?.fullName || 'System'}</td>
                       <td className="px-6 py-4 text-xs text-[#8c90a1] text-right">{new Date(log.createdAt).toLocaleString()}</td>
                     </tr>
                   ))

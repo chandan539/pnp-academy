@@ -9,19 +9,19 @@ export default function HelpPage() {
       overrideSubtitle="Documentation and resources for using PnP Academy systems."
     >
       <div className="glass-panel p-8 rounded-xl max-w-4xl mx-auto w-full">
-        <h3 className="text-2xl font-bold text-[#d3e4fe] mb-6">Platform Setup Guide</h3>
+        <h3 className="text-2xl font-bold text-brand-white mb-6">Platform Setup Guide</h3>
         
         <div className="space-y-6">
-          <div className="bg-[#102034] p-6 rounded-lg border border-[#424656]">
-            <h4 className="text-lg font-semibold text-[#b3c5ff] mb-2">1. Marketing Integrations</h4>
+          <div className="bg-[#102034] p-6 rounded-lg border border-brand-primary">
+            <h4 className="text-lg font-semibold text-brand-secondary mb-2">1. Marketing Integrations</h4>
             <p className="text-sm text-[#8c90a1] mb-4">
               To track conversions and user flow, go to the <strong>Settings</strong> page and configure your Meta Pixel, Google Analytics, and HubSpot tracking codes.
               These codes will automatically be injected into the public pages.
             </p>
           </div>
 
-          <div className="bg-[#102034] p-6 rounded-lg border border-[#424656]">
-            <h4 className="text-lg font-semibold text-[#b3c5ff] mb-2">2. Email Delivery Setup</h4>
+          <div className="bg-[#102034] p-6 rounded-lg border border-brand-primary">
+            <h4 className="text-lg font-semibold text-brand-secondary mb-2">2. Email Delivery Setup</h4>
             <p className="text-sm text-[#8c90a1] mb-4">
               The platform supports both Gmail SMTP and Brevo API for transactional and bulk emails. 
               Configure your credentials in the <strong>Settings</strong> page.
@@ -32,8 +32,8 @@ export default function HelpPage() {
             </ul>
           </div>
 
-          <div className="bg-[#102034] p-6 rounded-lg border border-[#424656]">
-            <h4 className="text-lg font-semibold text-[#b3c5ff] mb-2">3. Webhooks & Google Sheets (AppSheet)</h4>
+          <div className="bg-[#102034] p-6 rounded-lg border border-brand-primary">
+            <h4 className="text-lg font-semibold text-brand-secondary mb-2">3. Webhooks & Google Sheets (AppSheet)</h4>
             <p className="text-sm text-[#8c90a1] mb-4">
               When an author submits the onboarding form, their data is instantly sent to the webhook URL provided in the <strong>Settings</strong> page.
             </p>
@@ -47,7 +47,7 @@ export default function HelpPage() {
               <li>Set access to <strong>Anyone</strong>, and copy the Web App URL.</li>
               <li>Paste that URL into the <strong>Settings</strong> page of this dashboard.</li>
             </ol>
-            <div className="bg-[#031427] p-4 rounded text-xs font-mono text-[#b3c5ff] overflow-x-auto whitespace-pre">
+            <div className="bg-brand-primary-dark p-4 rounded text-xs font-mono text-brand-secondary overflow-x-auto whitespace-pre">
 {`function doPost(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
@@ -80,8 +80,8 @@ export default function HelpPage() {
             </p>
           </div>
 
-          <div className="bg-[#102034] p-6 rounded-lg border border-[#424656]">
-            <h4 className="text-lg font-semibold text-[#b3c5ff] mb-2">4. Author Management & CSV Import</h4>
+          <div className="bg-[#102034] p-6 rounded-lg border border-brand-primary">
+            <h4 className="text-lg font-semibold text-brand-secondary mb-2">4. Author Management & CSV Import</h4>
             <p className="text-sm text-[#8c90a1] mb-4">
               Use the <strong>Authors</strong> tab to view all registered authors. You can import legacy data using the CSV upload feature. 
               Note: Only Super Admins can delete authors.
@@ -89,8 +89,8 @@ export default function HelpPage() {
           </div>
         </div>
 
-        <div className="mt-8 pt-8 border-t border-[#424656]">
-          <h3 className="text-xl font-bold text-[#d3e4fe] mb-4">Need Support?</h3>
+        <div className="mt-8 pt-8 border-t border-brand-primary">
+          <h3 className="text-xl font-bold text-brand-white mb-4">Need Support?</h3>
           <p className="text-sm text-[#8c90a1]">
             Contact the IT team at support@pnpacademy.com for any technical issues.
           </p>
